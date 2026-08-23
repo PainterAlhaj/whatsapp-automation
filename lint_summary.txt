@@ -1,0 +1,194 @@
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\activity-logs\page.tsx
+  line 15 (@typescript-eslint/no-unused-vars): 'History' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'FileDown' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\analytics\page.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+  line 15 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\billing\page.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'TrendingUp' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\integrations\page.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 15 (@typescript-eslint/no-unused-vars): 'Layers' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'Activity' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Key' is defined but never used.
+  line 18 (@typescript-eslint/no-unused-vars): 'Info' is defined but never used.
+  line 20 (@typescript-eslint/no-unused-vars): 'RefreshCw' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\settings\page.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Button' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\activity-logs\activity-table-timeline.tsx
+  line 19 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 21 (@typescript-eslint/no-unused-vars): 'CalendarDays' is defined but never used.
+  line 52 (react-hooks/preserve-manual-memoization): Compilation Skipped: Existing memoization could not be preserved  React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. This value was memoized in source but not in compilation output.  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\activity-logs\activity-table-timeline.tsx:52:24   50 |   51 |   // Filter calculation > 52 |   const filteredLogs = React.useMemo(() => {      |                        ^^^^^^^^^^^^^^^^^^^^^ > 53 |     return logs.filter(log => {      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ > 54 |       const matchSearch =       ΓÇª      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ > 65 |     })      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ > 66 |   }, [logs, searchQuery, categoryFilter, statusFilter])      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Could not preserve existing memoization   67 |   68 |   // Reset pagination on filters shift   69 |   React.useEffect(() => {
+  line 70 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\activity-logs\activity-table-timeline.tsx:70:5   68 |   // Reset pagination on filters shift   69 |   React.useEffect(() => { > 70 |     setCurrentPage(1)      |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   71 |   }, [searchQuery, categoryFilter, statusFilter])   72 |   73 |   // Pagination bounds
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\activity-timeline.tsx
+  line 44 (@typescript-eslint/no-unused-vars): 'idx' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-campaigns-table.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+  line 7 (@typescript-eslint/no-unused-vars): 'FileText' is defined but never used.
+  line 9 (@typescript-eslint/no-unused-vars): 'cn' is defined but never used.
+  line 30 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-campaigns-table.tsx:30:5   28 |   29 |   React.useEffect(() => { > 30 |     setCurrentPage(1)      |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   31 |   }, [searchQuery])   32 |   33 |   return (
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-charts.tsx
+  line 158 (@typescript-eslint/no-unused-vars): 'total' is assigned a value but never used.
+  line 296 (@typescript-eslint/no-unused-vars): 'strokeOffset' is assigned a value but never used.
+  line 298 (react-hooks/immutability): Error: Cannot reassign variable after render completes  Reassigning `accumulatedPercent` after render has completed can cause inconsistent behavior on subsequent renders. Consider using state instead.  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-charts.tsx:298:19   296 |                   const strokeOffset = donutCircumference - strokeLength   297 |                   const dashOffset = -(accumulatedPercent * donutCircumference) > 298 |                   accumulatedPercent += percentage       |                   ^^^^^^^^^^^^^^^^^^ Cannot reassign `accumulatedPercent` after render completes   299 |   300 |                   return (   301 |                     <circle
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-stats.tsx
+  line 54 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\automations-list.tsx
+  line 10 (@typescript-eslint/no-unused-vars): 'Activity' is defined but never used.
+  line 11 (@typescript-eslint/no-unused-vars): 'CheckCircle2' is defined but never used.
+  line 12 (@typescript-eslint/no-unused-vars): 'AlertTriangle' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+  line 14 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+  line 200 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\automations-list.tsx:200:5   198 |   // Auto-reset page pagination   199 |   React.useEffect(() => { > 200 |     setAutoPage(1)       |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect   201 |   }, [searchQuery, selectedStatus, selectedTrigger, sortCriteria])   202 |   203 |   return (
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\automations-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\workflow-preview-panel.tsx
+  line 8 (@typescript-eslint/no-unused-vars): 'UserPlus' is defined but never used.
+  line 9 (@typescript-eslint/no-unused-vars): 'ShoppingBag' is defined but never used.
+  line 10 (@typescript-eslint/no-unused-vars): 'Mail' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\billing-history.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\coupon-invoice.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 8 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\current-subscription.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Receipt' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\payment-methods.tsx
+  line 17 (@typescript-eslint/no-unused-vars): 'ShieldCheck' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+  line 110 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 199 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+  line 199 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\pricing-plans.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardTitle' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\usage-overview.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardHeader' is defined but never used.
+  line 4 (@typescript-eslint/no-unused-vars): 'CardTitle' is defined but never used.
+  line 4 (@typescript-eslint/no-unused-vars): 'CardDescription' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaign-details-drawer.tsx
+  line 16 (@typescript-eslint/no-unused-vars): 'HelpCircle' is defined but never used.
+  line 19 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-list.tsx
+  line 13 (@typescript-eslint/no-unused-vars): 'CheckCircle2' is defined but never used.
+  line 14 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+  line 18 (@typescript-eslint/no-unused-vars): 'Plus' is defined but never used.
+  line 97 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 100 (react-hooks/purity): Error: Cannot call impure function during render  `Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-list.tsx:100:32    98 |         activityTimeline: [    99 |           { > 100 |             id: `cmpl_toggle_${Date.now()}`,       |                                ^^^^^^^^^^ Cannot call impure function   101 |             type: newStatus === "active" ? "sending" : "paused",   102 |             description: newStatus === "active" ? "Resumed broadcasting" : "Campaign paused by user",   103 |             time: "Just now"
+  line 165 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-list.tsx:165:5   163 |   // Reset page on filter changes   164 |   React.useEffect(() => { > 165 |     setCurrentPage(1)       |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   166 |   }, [searchQuery, selectedStatus, selectedDateFilter, sortCriteria])   167 |   168 |   // Expose Trigger for Page Header Broadcast button
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\create-campaign-modal.tsx
+  line 36 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\create-campaign-modal.tsx:36:7   34 |   React.useEffect(() => {   35 |     if (template) { > 36 |       setVariables(Array(template.variables.length).fill(""))      |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect   37 |     }   38 |   }, [selectedTemplateId, template])   39 |
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-list.tsx
+  line 11 (@typescript-eslint/no-unused-vars): 'X' is defined but never used.
+  line 24 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+  line 95 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-list.tsx:95:7   93 |   React.useEffect(() => {   94 |     if (selectedContact) { > 95 |       setDrawerNotes(selectedContact.notes)      |       ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   96 |       setIsNotesSaved(false)   97 |     }   98 |   }, [selectedContactId, selectedContact])
+  line 154 (@typescript-eslint/no-unused-vars): 'err' is defined but never used.
+  line 220 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-list.tsx:220:5   218 |   // Reset page when filters change   219 |   React.useEffect(() => { > 220 |     setCurrentPage(1)       |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   221 |   }, [searchQuery, selectedGroup, selectedStatus, sortCriteria])   222 |   223 |   // Expose Trigger for Parent Header Button
+  line 307 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\analytics-charts.tsx
+  line 23 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\analytics-charts.tsx:23:5   21 |   22 |   React.useEffect(() => { > 23 |     setMounted(true)      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect   24 |   }, [])   25 |   26 |   if (!mounted) {
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\recent-activity.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'Send' is defined but never used.
+  line 5 (@typescript-eslint/no-unused-vars): 'cn' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\stats-cards.tsx
+  line 19 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\subscription-status.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'limit' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\integrations\integration-api-webhooks.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 12 (@typescript-eslint/no-unused-vars): 'setWebhookSecret' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\integrations\integration-cards.tsx
+  line 21 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+  line 24 (@typescript-eslint/no-unused-vars): 'initialIntegrationsData' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\layout\layout-context.tsx
+  line 24 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\layout\layout-context.tsx:24:7   22 |     const saved = localStorage.getItem("sidebar-collapsed")   23 |     if (saved) { > 24 |       setIsSidebarCollapsed(saved === "true")      |       ^^^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   25 |     }   26 |   }, [])   27 |
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\notifications\notification-list.tsx
+  line 19 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+  line 144 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\notifications\notification-list.tsx:144:5   142 |   // Reset pagination on filter alteration   143 |   React.useEffect(() => { > 144 |     setCurrentPage(1)       |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   145 |   }, [category, readState, searchQuery])   146 |   147 |   // Pagination bounds
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\appearance-settings.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Layout' is defined but never used.
+  line 45 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\danger-zone.tsx
+  line 14 (@typescript-eslint/no-unused-vars): 'DialogTrigger' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'Trash2' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\language-region.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\notification-preferences.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Bell' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\security-settings.tsx
+  line 8 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 8 (@typescript-eslint/no-unused-vars): 'KeyRound' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\whatsapp-settings.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+  line 7 (@typescript-eslint/no-unused-vars): 'Key' is defined but never used.
+  line 11 (@typescript-eslint/no-unused-vars): 'setWaSettings' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\create-template-modal.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+  line 45 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\create-template-modal.tsx:45:5   43 |   // Sync variable labels when unique variable tags shift   44 |   React.useEffect(() => { > 45 |     setVariableLabels(prev => {      |     ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   46 |       const next: Record<number, string> = {}   47 |       activeVariableIds.forEach(id => {   48 |         next[id] = prev[id] || `Variable ${id}`
+  line 144 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\template-preview-modal.tsx
+  line 13 (@typescript-eslint/no-unused-vars): 'Play' is defined but never used.
+  line 32 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\template-preview-modal.tsx:32:7   30 |         initial[idx + 1] = ""   31 |       }) > 32 |       setTestValues(initial)      |       ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   33 |     }   34 |   }, [template])   35 |
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\templates-list.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Copy' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'Plus' is defined but never used.
+  line 19 (@typescript-eslint/no-unused-vars): 'ExternalLink' is defined but never used.
+  line 130 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\templates-list.tsx:130:5   128 |   // Reset page when filters shift   129 |   React.useEffect(() => { > 130 |     setCurrentPage(1)       |     ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect   131 |   }, [searchQuery, selectedCategory, selectedStatus, sortCriteria])   132 |   133 |   // Expose Trigger for Page Header CTA button
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\theme\theme-toggle.tsx
+  line 14 (react-hooks/set-state-in-effect): Error: Calling setState synchronously within an effect can trigger cascading renders  Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following: * Update external systems with the latest state from React. * Subscribe for updates from some external system, calling setState in a callback function when external state changes.  Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).  C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\theme\theme-toggle.tsx:14:5   12 |   // Avoid hydration mismatch   13 |   React.useEffect(() => { > 14 |     setMounted(true)      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect   15 |   }, [])   16 |   17 |   if (!mounted) {
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\lib\api\api-client.ts
+  line 94 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 102 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 110 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\repositories\auth.repository.ts
+  line 18 (@typescript-eslint/no-unused-vars): 'password' is defined but never used.
+

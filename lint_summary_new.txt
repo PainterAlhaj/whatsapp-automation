@@ -1,0 +1,169 @@
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\activity-logs\page.tsx
+  line 15 (@typescript-eslint/no-unused-vars): 'History' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'FileDown' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\analytics\page.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+  line 15 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\billing\page.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'TrendingUp' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\integrations\page.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 15 (@typescript-eslint/no-unused-vars): 'Layers' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'Activity' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Key' is defined but never used.
+  line 18 (@typescript-eslint/no-unused-vars): 'Info' is defined but never used.
+  line 20 (@typescript-eslint/no-unused-vars): 'RefreshCw' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\app\settings\page.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Button' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\activity-logs\activity-table-timeline.tsx
+  line 19 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 21 (@typescript-eslint/no-unused-vars): 'CalendarDays' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\activity-timeline.tsx
+  line 44 (@typescript-eslint/no-unused-vars): 'idx' is defined but never used. Allowed unused args must match /^_/u.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-campaigns-table.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+  line 7 (@typescript-eslint/no-unused-vars): 'FileText' is defined but never used.
+  line 9 (@typescript-eslint/no-unused-vars): 'cn' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-charts.tsx
+  line 158 (@typescript-eslint/no-unused-vars): 'total' is assigned a value but never used.
+  line 296 (@typescript-eslint/no-unused-vars): 'strokeOffset' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\analytics\analytics-stats.tsx
+  line 54 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\automations-list.tsx
+  line 10 (@typescript-eslint/no-unused-vars): 'Activity' is defined but never used.
+  line 11 (@typescript-eslint/no-unused-vars): 'CheckCircle2' is defined but never used.
+  line 12 (@typescript-eslint/no-unused-vars): 'AlertTriangle' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+  line 14 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\automations-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\automations\workflow-preview-panel.tsx
+  line 8 (@typescript-eslint/no-unused-vars): 'UserPlus' is defined but never used.
+  line 9 (@typescript-eslint/no-unused-vars): 'ShoppingBag' is defined but never used.
+  line 10 (@typescript-eslint/no-unused-vars): 'Mail' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\billing-history.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\coupon-invoice.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 8 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\current-subscription.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'Receipt' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\payment-methods.tsx
+  line 17 (@typescript-eslint/no-unused-vars): 'ShieldCheck' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Sparkles' is defined but never used.
+  line 110 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 199 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+  line 199 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\pricing-plans.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardTitle' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\billing\usage-overview.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'CardHeader' is defined but never used.
+  line 4 (@typescript-eslint/no-unused-vars): 'CardTitle' is defined but never used.
+  line 4 (@typescript-eslint/no-unused-vars): 'CardDescription' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaign-details-drawer.tsx
+  line 16 (@typescript-eslint/no-unused-vars): 'HelpCircle' is defined but never used.
+  line 19 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-list.tsx
+  line 13 (@typescript-eslint/no-unused-vars): 'CheckCircle2' is defined but never used.
+  line 14 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+  line 17 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+  line 18 (@typescript-eslint/no-unused-vars): 'Plus' is defined but never used.
+  line 97 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\campaigns\campaigns-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-list.tsx
+  line 11 (@typescript-eslint/no-unused-vars): 'X' is defined but never used.
+  line 24 (@typescript-eslint/no-unused-vars): 'CardContent' is defined but never used.
+  line 154 (@typescript-eslint/no-unused-vars): 'err' is defined but never used.
+  line 307 (react/no-unescaped-entities): `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\contacts\contacts-stats.tsx
+  line 46 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\recent-activity.tsx
+  line 4 (@typescript-eslint/no-unused-vars): 'Send' is defined but never used.
+  line 5 (@typescript-eslint/no-unused-vars): 'cn' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\stats-cards.tsx
+  line 19 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\dashboard\subscription-status.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'limit' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\integrations\integration-api-webhooks.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 12 (@typescript-eslint/no-unused-vars): 'setWebhookSecret' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\integrations\integration-cards.tsx
+  line 21 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+  line 24 (@typescript-eslint/no-unused-vars): 'initialIntegrationsData' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\notifications\notification-list.tsx
+  line 19 (@typescript-eslint/no-unused-vars): 'AlertCircle' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\appearance-settings.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Layout' is defined but never used.
+  line 45 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\danger-zone.tsx
+  line 14 (@typescript-eslint/no-unused-vars): 'DialogTrigger' is defined but never used.
+  line 16 (@typescript-eslint/no-unused-vars): 'Trash2' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\language-region.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Clock' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\notification-preferences.tsx
+  line 6 (@typescript-eslint/no-unused-vars): 'Bell' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\security-settings.tsx
+  line 8 (@typescript-eslint/no-unused-vars): 'ShieldAlert' is defined but never used.
+  line 8 (@typescript-eslint/no-unused-vars): 'KeyRound' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\settings\whatsapp-settings.tsx
+  line 7 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+  line 7 (@typescript-eslint/no-unused-vars): 'Key' is defined but never used.
+  line 11 (@typescript-eslint/no-unused-vars): 'setWaSettings' is assigned a value but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\create-template-modal.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Badge' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'MessageSquare' is defined but never used.
+  line 144 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\template-preview-modal.tsx
+  line 13 (@typescript-eslint/no-unused-vars): 'Play' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\components\templates\templates-list.tsx
+  line 12 (@typescript-eslint/no-unused-vars): 'Copy' is defined but never used.
+  line 13 (@typescript-eslint/no-unused-vars): 'Plus' is defined but never used.
+  line 19 (@typescript-eslint/no-unused-vars): 'ExternalLink' is defined but never used.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\lib\api\api-client.ts
+  line 94 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 102 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+  line 110 (@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.
+
+FILE: C:\Users\Admin\Desktop\whatsapp-automation\whatsapp-automation-saas\src\repositories\auth.repository.ts
+  line 18 (@typescript-eslint/no-unused-vars): 'password' is defined but never used. Allowed unused args must match /^_/u.
+
