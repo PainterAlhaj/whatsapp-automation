@@ -8,9 +8,28 @@ import { useContacts } from "@/hooks/use-contacts";
 export function ContactsStats() {
   const { data: totalData } = useContacts({ limit: 1 });
   const { data: activeData } = useContacts({ limit: 1, status: "active" });
+  const { data: contactsData } = useContacts({ limit: 100 });
 
   const totalCount = totalData?.pagination?.total ?? 0;
   const activeCount = activeData?.pagination?.total ?? 0;
+  const contactsList = contactsData?.contacts || [];
+
+  const uniqueGroupsCount = React.useMemo(() => {
+    const set = new Set<string>();
+    contactsList.forEach((c) => {
+      c.groups?.forEach((g) => { if (g) set.add(g); });
+      c.tags?.forEach((t) => { if (t) set.add(t); });
+    });
+    return set.size;
+  }, [contactsList]);
+
+  const newThisWeekCount = React.useMemo(() => {
+    const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    return contactsList.filter((c) => {
+      if (!c.createdAt) return false;
+      return new Date(c.createdAt).getTime() >= sevenDaysAgo;
+    }).length;
+  }, [contactsList]);
 
   const statsList = React.useMemo(() => [
     {
@@ -29,19 +48,19 @@ export function ContactsStats() {
     },
     {
       title: "Custom Groups",
-      value: "6",
+      value: uniqueGroupsCount > 0 ? `${uniqueGroupsCount}` : "0",
       description: "Targeted audience segments",
-      change: "Static",
+      change: "Live",
       trend: "up" as const,
     },
     {
       title: "New This Week",
-      value: "128",
-      description: "Organic & CSV imports",
+      value: newThisWeekCount.toLocaleString(),
+      description: "Added in last 7 days",
       change: "+24%",
       trend: "up" as const,
     },
-  ], [totalCount, activeCount]);
+  ], [totalCount, activeCount, uniqueGroupsCount, newThisWeekCount]);
 
   const getIcon = (title: string) => {
     switch (title) {

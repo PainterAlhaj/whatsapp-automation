@@ -1,4 +1,4 @@
-import { Send, Play, Link2, CheckCircle2, UserPlus, FileText, GitBranch } from "lucide-react"
+import { Send, Play, Link2, CheckCircle2, UserPlus, FileText, GitBranch, HelpCircle } from "lucide-react"
 import * as React from "react"
 
 // Types
@@ -212,6 +212,13 @@ export const logEvents: LogEvent[] = [
 
 export const shortcutActions: ShortcutAction[] = [
   {
+    title: "How It Works Guide",
+    description: "Step-by-step setup walkthrough",
+    href: "/how-it-works",
+    icon: HelpCircle,
+    color: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20"
+  },
+  {
     title: "Create Campaign",
     description: "Launch a message broadcast",
     href: "/campaigns",
@@ -223,7 +230,7 @@ export const shortcutActions: ShortcutAction[] = [
     description: "Import lists or single users",
     href: "/contacts",
     icon: UserPlus,
-    color: "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20"
+    color: "text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/20"
   },
   {
     title: "Create Template",
@@ -1395,15 +1402,8 @@ export const initialCompanySettings: CompanySettings = {
 
 export const initialWhatsAppSettings: WhatsAppSettings = {
   connectedNumber: "+1 (555) 019-9988",
-  businessDisplayName: "WhatsFlow Notifications",
+  businessDisplayName: "WhatsFlow Gateway",
   connectionStatus: "connected"
-}
-
-export const initialNotificationPreferences: NotificationPreferences = {
-  emailNotifications: true,
-  whatsappNotifications: true,
-  campaignAlerts: true,
-  systemUpdates: false
 }
 
 export const mockActiveSessions: ActiveSessionItem[] = [
@@ -1441,92 +1441,6 @@ export const initialApiWebhookSettings: ApiWebhookSettings = {
   webhookUrl: "https://api.whatsflow.com/v1/webhook"
 }
 
-// Notification Center interfaces
-export interface NotificationCenterItem {
-  id: string
-  title: string
-  description: string
-  time: string
-  category: "campaigns" | "automations" | "billing" | "security" | "system"
-  read: boolean
-  severity: "info" | "success" | "warning" | "error"
-}
-
-export const initialNotificationsCenterData: NotificationCenterItem[] = [
-  {
-    id: "n_1",
-    title: "Campaign Concluded Successfully",
-    description: "Promo_June_Blast completed transmission to all 3,400 list contacts. 98.3% delivery success rate.",
-    time: "5m ago",
-    category: "campaigns",
-    read: false,
-    severity: "success"
-  },
-  {
-    id: "n_2",
-    title: "Webhook Delivery Retries Exhausted",
-    description: "Failure returning webhook callback payload response to endpoint: https://api.whatsflow.com/v1/webhook (status: 504 Timeout).",
-    time: "25m ago",
-    category: "system",
-    read: false,
-    severity: "error"
-  },
-  {
-    id: "n_3",
-    title: "New Host Authorized login",
-    description: "An administrator logged into this workspace using Chrome on macOS (14.2) from IP: 192.168.1.42.",
-    time: "2h ago",
-    category: "security",
-    read: true,
-    severity: "warning"
-  },
-  {
-    id: "n_4",
-    title: "Invoice INV-2026-003 Discharged",
-    description: "Your monthly plan base rate and API credits charge of $91.50 was billed successfully to Visa ending in 4242.",
-    time: "1d ago",
-    category: "billing",
-    read: true,
-    severity: "success"
-  },
-  {
-    id: "n_5",
-    title: "Automation recovery triggered",
-    description: "Flow 'Cart_Recovery_Flow' triggered response sequences for contact +1 (555) 019-2834.",
-    time: "2d ago",
-    category: "automations",
-    read: false,
-    severity: "info"
-  },
-  {
-    id: "n_6",
-    title: "Meta Template Vetted & Approved",
-    description: "Meta reviewers approved template profile 'Summer_Coupon_Broadcast' for marketing activities.",
-    time: "3d ago",
-    category: "campaigns",
-    read: true,
-    severity: "success"
-  },
-  {
-    id: "n_7",
-    title: "Account Limit Warning cap",
-    description: "Connected WhatsApp business number channels have reached 80% capacity checks (4 of 5 active lines).",
-    time: "4d ago",
-    category: "system",
-    read: true,
-    severity: "warning"
-  },
-  {
-    id: "n_8",
-    title: "Automation threshold pause",
-    description: "Visual flows 'Welcome_User' has been temporarily paused due to broken template link references.",
-    time: "5d ago",
-    category: "automations",
-    read: false,
-    severity: "error"
-  }
-]
-
 // Integrations Interfaces
 export interface IntegrationItem {
   id: string
@@ -1550,125 +1464,20 @@ export const initialIntegrationsData: IntegrationItem[] = [
     name: "WhatsApp Business Platform",
     description: "Send templates, retrieve message statuses, and coordinate automations directly via Meta Cloud API.",
     category: "messaging",
-    status: "connected",
+    status: "disconnected",
     featured: true
   },
   {
     id: "int_meta",
-    name: "Meta Suite Developer Console",
-    description: "Manage display identities, register outbound phone numbers, and coordinate templates review processes.",
+    name: "Facebook & Meta Business Suite",
+    description: "Manage Meta Developer App credentials, Facebook Business Account pairing, and WABA configuration.",
     category: "messaging",
-    status: "connected",
-    featured: true
-  },
-  {
-    id: "int_gsheets",
-    name: "Google Sheets",
-    description: "Export campaign read outcomes, sync contact registries, and log real-time replies instantly.",
-    category: "productivity",
-    status: "connected",
-    featured: true
-  },
-  {
-    id: "int_gmail",
-    name: "Gmail Outbound Service",
-    description: "Forward system status notifications, invoice summaries, and delivery failure sheets.",
-    category: "productivity",
     status: "disconnected",
     featured: true
-  },
-  {
-    id: "int_slack",
-    name: "Slack Notify Workspace",
-    description: "Forward alerts and campaign conclusion summaries to Slack channels for administrative visibility.",
-    category: "productivity",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_zapier",
-    name: "Zapier Automations",
-    description: "Connect WhatsApp messaging flows to 5,000+ software services using custom triggers and zaps.",
-    category: "productivity",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_shopify",
-    name: "Shopify Storefront Sync",
-    description: "Automate cart recovery, dispatch order invoices, and deliver tracking codes via WhatsApp messages.",
-    category: "ecommerce",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_woocommerce",
-    name: "WooCommerce Plugins",
-    description: "Trigger WhatsApp templates on new orders, refunds, and shipment updates.",
-    category: "ecommerce",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_hubspot",
-    name: "HubSpot CRM Systems",
-    description: "Sync conversational timeline threads with client cards and segment contact lists.",
-    category: "crm",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_salesforce",
-    name: "Salesforce Cloud Suite",
-    description: "Manage lead sequences and pipeline status changes from WhatsApp reply logs.",
-    category: "crm",
-    status: "disconnected",
-    featured: false
-  },
-  {
-    id: "int_stripe",
-    name: "Stripe Payment Gateway",
-    description: "Dispatch WhatsApp payment links and credit card invoice billing receipts.",
-    category: "payments",
-    status: "connected",
-    featured: false
-  },
-  {
-    id: "int_razorpay",
-    name: "Razorpay Billing Gateway",
-    description: "Coordinate subscription payment reminders and confirmation sheets.",
-    category: "payments",
-    status: "disconnected",
-    featured: false
   }
 ]
 
-export const mockIntegrationActivityData: IntegrationActivity[] = [
-  {
-    id: "act_1",
-    integrationName: "Stripe Payment Gateway",
-    action: "Authorized credential keys",
-    time: "2 hours ago"
-  },
-  {
-    id: "act_2",
-    integrationName: "Google Sheets",
-    action: "Synchronized contact spreadsheet list",
-    time: "Yesterday"
-  },
-  {
-    id: "act_3",
-    integrationName: "WhatsApp Business Platform",
-    action: "Reconnected API Cloud gateway session",
-    time: "3 days ago"
-  },
-  {
-    id: "act_4",
-    integrationName: "Shopify Storefront Sync",
-    action: "De-authorized active API sessions",
-    time: "5 days ago"
-  }
-]
+export const mockIntegrationActivityData: IntegrationActivity[] = []
 
 // Activity Logs Interfaces
 export interface ActivityLogItem {

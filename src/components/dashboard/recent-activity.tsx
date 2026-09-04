@@ -4,9 +4,37 @@ import * as React from "react"
 import { CheckCircle2, AlertCircle, RefreshCw, MessageSquare, Reply, Check, HeartHandshake } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { recentCampaigns, logEvents } from "@/lib/mock-data"
+import { CampaignActivity, LogEvent } from "@/lib/mock-data"
+import { activityLogsRepository } from "@/repositories"
 
 export function RecentActivity() {
+  const [campaigns, setCampaigns] = React.useState<CampaignActivity[]>([])
+  const [events, setEvents] = React.useState<LogEvent[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    let isMounted = true
+    async function loadData() {
+      try {
+        const data = await activityLogsRepository.getRecentActivities()
+        if (isMounted) {
+          setCampaigns(data.recentCampaigns)
+          setEvents(data.logEvents)
+        }
+      } catch (err) {
+        console.error("Failed to load recent activity:", err)
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      }
+    }
+    loadData()
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   const getStatusBadge = (status: "sending" | "completed" | "failed") => {
     switch (status) {
       case "completed":
@@ -65,11 +93,14 @@ export function RecentActivity() {
       <Card className="flex flex-col justify-between">
         <div>
           <CardHeader>
-            <CardTitle>Recent Campaigns</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <span>Recent Campaigns</span>
+              {isLoading && <RefreshCw className="h-3.5 w-3.5 animate-spin text-muted-foreground" />}
+            </CardTitle>
             <CardDescription>Status and reach of your recent message broadcasts.</CardDescription>
           </CardHeader>
           <CardContent className="divide-y divide-border/60">
-            {recentCampaigns.map((campaign) => (
+            {campaigns.map((campaign) => (
               <div key={campaign.id} className="py-3.5 first:pt-0 last:pb-0 flex items-center justify-between gap-4">
                 <div className="space-y-1">
                   <span className="text-sm font-semibold text-foreground block">{campaign.name}</span>
@@ -93,11 +124,14 @@ export function RecentActivity() {
       <Card className="flex flex-col justify-between">
         <div>
           <CardHeader>
-            <CardTitle>Live Activity Feed</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <span>Live Activity Feed</span>
+              {isLoading && <RefreshCw className="h-3.5 w-3.5 animate-spin text-muted-foreground" />}
+            </CardTitle>
             <CardDescription>Real-time updates from automated flows and Meta API.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {logEvents.map((log) => (
+            {events.map((log) => (
               <div key={log.id} className="flex gap-3 items-start">
                 <div className="shrink-0 mt-0.5">{getLogIcon(log.type)}</div>
                 <div className="flex-1 space-y-0.5">
@@ -117,3 +151,4 @@ export function RecentActivity() {
     </div>
   )
 }
+

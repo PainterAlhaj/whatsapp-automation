@@ -142,7 +142,7 @@ export default function LoginPage() {
             </div>
 
             {/* Remember Me Checkbox */}
-            <div className="flex items-center justify-between pt-1">
+            {/* <div className="flex items-center justify-between pt-1">
               <label className="flex items-center gap-2.5 text-xs text-zinc-400 cursor-pointer select-none">
                 <input
                   type="checkbox"
@@ -152,7 +152,7 @@ export default function LoginPage() {
                 />
                 <span>Remember me for 30 days</span>
               </label>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <Button

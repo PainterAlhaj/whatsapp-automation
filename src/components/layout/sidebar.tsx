@@ -13,13 +13,25 @@ import { useLayout } from "./layout-context"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { navigationData } from "@/config/navigation"
-
 import { useAuth } from "@/lib/auth/auth-context"
+import { useContacts } from "@/hooks/use-contacts"
+import { useCampaigns } from "@/hooks/use-campaigns"
 
 export function Sidebar() {
   const pathname = usePathname()
   const { isSidebarCollapsed, toggleSidebar } = useLayout()
   const { logout } = useAuth()
+  const { data: contactsData } = useContacts({ limit: 1 })
+  const { data: campaignsData } = useCampaigns({ limit: 100 })
+
+  const totalContacts = contactsData?.pagination?.total ?? 0
+
+  const activeCampaignsCount = React.useMemo(() => {
+    if (!campaignsData?.campaigns) return 0
+    return campaignsData.campaigns.filter(
+      (c) => c.status === "PROCESSING" || c.status === "SCHEDULED"
+    ).length
+  }, [campaignsData])
 
   return (
     <aside
@@ -57,6 +69,13 @@ export function Sidebar() {
             <nav className="space-y-1">
               {section.items.map((item) => {
                 const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+                let displayBadge = item.badge
+                if (item.name === "Contacts") {
+                  displayBadge = totalContacts > 0 ? totalContacts.toLocaleString() : undefined
+                } else if (item.name === "Campaigns") {
+                  displayBadge = activeCampaignsCount > 0 ? `${activeCampaignsCount} active` : undefined
+                }
+
                 return (
                   <Link
                     key={item.name}
@@ -91,9 +110,9 @@ export function Sidebar() {
                     )}
 
                     {/* Badge */}
-                    {item.badge && !isSidebarCollapsed && (
+                    {displayBadge && !isSidebarCollapsed && (
                       <Badge variant={item.badgeVariant} className="ml-auto">
-                        {item.badge}
+                        {displayBadge}
                       </Badge>
                     )}
                   </Link>

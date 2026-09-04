@@ -5,21 +5,26 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, Search } from "lucide-react"
-import { analyticsCampaignsData } from "@/lib/mock-data"
+import { AnalyticsCampaignRow } from "@/types/analytics.types"
 
 const ITEMS_PER_PAGE = 5
 
-export function AnalyticsCampaignsTable() {
+interface AnalyticsCampaignsTableProps {
+  campaigns?: AnalyticsCampaignRow[]
+  loading?: boolean
+}
+
+export function AnalyticsCampaignsTable({ campaigns = [], loading = false }: AnalyticsCampaignsTableProps) {
   const [searchQuery, setSearchQuery] = React.useState("")
   const [currentPage, setCurrentPage] = React.useState(1)
 
   const filteredCampaigns = React.useMemo(() => {
-    return analyticsCampaignsData.filter(c => 
+    return campaigns.filter(c => 
       c.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
-  }, [searchQuery])
+  }, [campaigns, searchQuery])
 
-  const totalPages = Math.ceil(filteredCampaigns.length / ITEMS_PER_PAGE)
+  const totalPages = Math.max(1, Math.ceil(filteredCampaigns.length / ITEMS_PER_PAGE))
   const paginatedCampaigns = React.useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE
     return filteredCampaigns.slice(start, start + ITEMS_PER_PAGE)
@@ -68,7 +73,15 @@ export function AnalyticsCampaignsTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border/40 text-xs font-sans">
-            {paginatedCampaigns.length === 0 ? (
+            {loading ? (
+              Array.from({ length: 3 }).map((_, idx) => (
+                <tr key={idx} className="animate-pulse">
+                  <td colSpan={8} className="py-4 px-5">
+                    <div className="h-4 bg-muted/30 rounded w-full" />
+                  </td>
+                </tr>
+              ))
+            ) : paginatedCampaigns.length === 0 ? (
               <tr>
                 <td colSpan={8} className="py-12 text-center text-muted-foreground italic">
                   No matching campaign performance records found.
@@ -76,13 +89,13 @@ export function AnalyticsCampaignsTable() {
               </tr>
             ) : (
               paginatedCampaigns.map((item, idx) => (
-                <tr key={idx} className="hover:bg-muted/10 dark:hover:bg-accent/10 transition-colors">
+                <tr key={item.id || idx} className="hover:bg-muted/10 dark:hover:bg-accent/10 transition-colors">
                   <td className="py-3 px-5 font-semibold text-foreground">{item.name}</td>
                   <td className="py-3 px-5">
                     <Badge 
                       variant={
                         item.status === "completed" ? "success" : 
-                        item.status === "active" ? "secondary" : 
+                        item.status === "processing" || item.status === "active" ? "secondary" : 
                         "outline"
                       }
                       className="text-[9px] font-semibold uppercase"
@@ -112,7 +125,7 @@ export function AnalyticsCampaignsTable() {
       </div>
 
       {/* Pagination controls */}
-      {filteredCampaigns.length > 0 && (
+      {!loading && filteredCampaigns.length > 0 && (
         <div className="flex items-center justify-between p-4 border-t border-border/40 text-xs">
           <span className="text-muted-foreground">
             Showing <strong className="font-semibold text-foreground">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</strong> to{" "}

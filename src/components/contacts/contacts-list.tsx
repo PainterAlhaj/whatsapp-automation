@@ -119,6 +119,16 @@ export function ContactsList() {
     totalPages: 1,
   };
 
+  // Dynamically derive unique Groups / Tags from fetched database contacts + defaults
+  const dynamicGroupsList = React.useMemo(() => {
+    const set = new Set<string>(groupsList);
+    contactsList.forEach((c) => {
+      c.groups?.forEach((g) => { if (g) set.add(g); });
+      c.tags?.forEach((t) => { if (t) set.add(t); });
+    });
+    return Array.from(set);
+  }, [contactsList]);
+
   // React Query Mutations
   const createContactMutation = useCreateContact();
   const updateContactMutation = useUpdateContact();
@@ -310,7 +320,7 @@ export function ContactsList() {
               className="w-full sm:w-44 pl-3 pr-8 h-9 bg-background border border-border/80 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500/80 appearance-none cursor-pointer font-medium"
             >
               <option value="all">All Groups</option>
-              {groupsList.map((g) => (
+              {dynamicGroupsList.map((g) => (
                 <option key={g} value={g}>{g}</option>
               ))}
             </select>
@@ -613,7 +623,7 @@ export function ContactsList() {
                   onChange={(e) => setNewContactGroup(e.target.value)}
                   className="w-full rounded-lg border border-border/80 bg-background pl-3 pr-8 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer"
                 >
-                  {groupsList.map((g) => (
+                  {dynamicGroupsList.map((g) => (
                     <option key={g} value={g}>{g}</option>
                   ))}
                 </select>

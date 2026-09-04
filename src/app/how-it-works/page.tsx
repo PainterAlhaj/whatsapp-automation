@@ -7,22 +7,21 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { 
-  UserCheck, 
-  Plug, 
-  Users, 
-  FileText, 
-  Send, 
-  MessageSquare, 
-  CheckCircle2, 
-  ArrowRight, 
-  ChevronRight, 
-  Copy, 
-  Check, 
-  Key, 
-  ShieldCheck, 
-  Globe, 
-  Sparkles, 
+import {
+  Plug,
+  Users,
+  FileText,
+  Send,
+  MessageSquare,
+  CheckCircle2,
+  ArrowRight,
+  ChevronRight,
+  Copy,
+  Check,
+  Key,
+  ShieldCheck,
+  Globe,
+  Sparkles,
   HelpCircle,
   ExternalLink,
   Zap,
@@ -31,6 +30,8 @@ import {
   Layers,
   PlayCircle
 } from "lucide-react";
+
+import { env } from "@/config/env";
 
 interface StepItem {
   id: number;
@@ -51,185 +52,158 @@ interface StepItem {
   };
 }
 
-const stepsData: StepItem[] = [
-  {
-    id: 1,
-    slug: "login-setup",
-    title: "1. Account & Workspace Setup",
-    subtitle: "Create your WhatsFlow tenant account, log in, and configure organization profile.",
-    icon: UserCheck,
-    badge: "Step 1",
-    estimatedTime: "2 mins",
-    actionText: "Go to Account Settings",
-    actionHref: "/settings",
-    summary: "Register your account, log in securely with JWT authentication, and set up your workspace profile.",
-    details: {
-      heading: "Initial Setup & Security Checklist",
-      points: [
-        {
-          title: "Register & Login",
-          desc: "Create your account or log in using your registered email and password on the WhatsFlow auth portal."
+const getStepsData = (): StepItem[] => {
+  const apiUrl = env.apiBaseUrl;
+  return [
+    {
+      id: 1,
+      slug: "meta-integration",
+      title: "1. Connect Meta WhatsApp Cloud API",
+      subtitle: "Link your official WhatsApp Business account via Meta Developer Portal.",
+      icon: Plug,
+      badge: "Step 1 (Crucial)",
+      estimatedTime: "5 mins",
+      actionText: "Connect Meta",
+      actionHref: "/integrations",
+      summary: "Connect Meta Cloud API by retrieving your Phone Number ID, WABA ID, and Permanent System Access Token.",
+      details: {
+        heading: "Step-by-Step Meta Developer Portal Setup Guide",
+        points: [
+          {
+            title: "Step A: Create Meta Developer App",
+            desc: "Go to developers.facebook.com, click 'Create App', choose 'Business' app type, and enter your app name."
+          },
+          {
+            title: "Step B: Add WhatsApp Product",
+            desc: "Inside your app dashboard, click 'Set up' under the WhatsApp product section and choose or link your Meta Business Account."
+          },
+          {
+            title: "Step C: Copy Cloud API Credentials",
+            desc: "From WhatsApp > API Setup, copy your 'Phone Number ID' and 'WhatsApp Business Account ID' (WABA ID)."
+          },
+          {
+            title: "Step D: Generate Permanent Access Token",
+            desc: "Go to Meta Business Settings > Users > System Users. Create a System User with Admin privileges, assign your WhatsApp app, and generate a Never-Expiring Token with 'whatsapp_business_messaging' & 'whatsapp_business_management' permissions.",
+            note: "Do not use a 24-hour temporary token in production!"
+          },
+          {
+            title: "Step E: Configure Webhooks for Live Sync",
+            desc: "In Meta Developer Portal > WhatsApp > Configuration, enter your WhatsFlow Webhook Callback URL and Verify Token to enable instant two-way real-time messaging."
+          }
+        ],
+        codeSnippet: {
+          title: "Your Webhook Configuration Endpoint",
+          code: `Callback URL: ${apiUrl}/webhook/meta\nVerify Token: whatsapp_backend_2026_secure_token`,
+          language: "text"
         },
-        {
-          title: "Configure Tenant Profile",
-          desc: "Set your company name, primary business phone number, timezone, and team member roles under Settings."
+        proTip: "Make sure your WhatsApp Business Phone number has completed Meta OTP verification before attempting to send live messages."
+      }
+    },
+    {
+      id: 2,
+      slug: "contacts-import",
+      title: "2. Import & Manage Contacts",
+      subtitle: "Add single contacts or bulk import CSV files with international phone formatting.",
+      icon: Users,
+      badge: "Step 2",
+      estimatedTime: "3 mins",
+      actionText: "Manage Contacts",
+      actionHref: "/contacts",
+      summary: "Build your customer database with full country code support (+91, +1) and custom tagging.",
+      details: {
+        heading: "Contact List Management & Formatting Rules",
+        points: [
+          {
+            title: "International Format (E.164)",
+            desc: "All phone numbers must include country code without spaces or dashes (e.g. +919876543210 or +14155552671)."
+          },
+          {
+            title: "CSV Bulk Import",
+            desc: "Upload CSV or Excel spreadsheets with column headers: Name, Phone, Email, Tags, Custom Attributes."
+          },
+          {
+            title: "Tagging & Segmentation",
+            desc: "Assign tags like 'Lead', 'VIP Customer', 'Newsletter' to easily filter audiences during campaign creation."
+          }
+        ],
+        codeSnippet: {
+          title: "Sample CSV Upload Format",
+          code: "Name,Phone,Email,Tags\nRahul Sharma,+919876543210,rahul@example.com,VIP\nSarah Jenkins,+14155552671,sarah@example.com,Lead",
+          language: "csv"
         },
-        {
-          title: "API Keys & Security",
-          desc: "Access your unique tenant API keys to enable seamless backend-to-frontend state synchronization."
-        }
-      ],
-      proTip: "Ensure your account email matches your Meta Business Manager admin email for smoother integration verification."
+        proTip: "WhatsFlow automatically validates phone numbers upon entry to prevent delivery failures."
+      }
+    },
+    {
+      id: 3,
+      slug: "templates-creation",
+      title: "3. Create & Submit Message Templates",
+      subtitle: "Design Meta-compliant WhatsApp templates with dynamic variables and action buttons.",
+      icon: FileText,
+      badge: "Step 3",
+      estimatedTime: "4 mins",
+      actionText: "Create Template",
+      actionHref: "/templates",
+      summary: "Submit Marketing, Utility, or Authentication templates to Meta for fast automated approval.",
+      details: {
+        heading: "Template Design & Meta Approval Process",
+        points: [
+          {
+            title: "Select Category & Language",
+            desc: "Choose between Marketing, Utility, or Authentication categories and pick your target language (e.g., English, Hindi)."
+          },
+          {
+            title: "Add Header, Body & Variables",
+            desc: "Construct your message body and insert dynamic variables like {{1}} for customer name or {{2}} for order ID."
+          },
+          {
+            title: "Interactive Buttons",
+            desc: "Attach Call-to-Action (CTA) website links, phone call buttons, or Quick Reply options."
+          },
+          {
+            title: "Meta Automated Review",
+            desc: "Once submitted, Meta's automated AI system reviews your template within 1 to 5 minutes. Status will update to 'APPROVED'."
+          }
+        ],
+        proTip: "Avoid spam words or ALL CAPS in template body text to maintain a high Meta quality rating."
+      }
+    },
+    {
+      id: 4,
+      slug: "campaigns-chat",
+      title: "4. Launch Campaigns & Live 1-on-1 Chat",
+      subtitle: "Send mass broadcast campaigns, trigger automated flows, and reply via Live Chat.",
+      icon: Send,
+      badge: "Step 4",
+      estimatedTime: "Instant",
+      actionText: "Go to Campaigns",
+      actionHref: "/campaigns",
+      summary: "Execute broadcasts to thousands of contacts, track delivery receipts, and converse in real-time.",
+      details: {
+        heading: "Campaign Broadcasts & Live Chat Execution",
+        points: [
+          {
+            title: "Create Outbound Campaign",
+            desc: "Select an approved template, choose your target contact tags or list, set delivery schedule, and launch."
+          },
+          {
+            title: "Real-Time Delivery & Read Analytics",
+            desc: "Monitor live metrics for Sent, Delivered, Read, Failed, and Link Clicks right from your Dashboard."
+          },
+          {
+            title: "Live Chat Interface",
+            desc: "When customers reply to your campaign, seamlessly converse with them using the unified two-way Live Chat."
+          },
+          {
+            title: "Automated Triggers",
+            desc: "Configure auto-responders and chatbot rules to reply instantly 24/7 when specific keywords are detected."
+          }
+        ],
+        proTip: "Use Live Chat filters to prioritize unread customer inquiries and boost response times."
+      }
     }
-  },
-  {
-    id: 2,
-    slug: "meta-integration",
-    title: "2. Connect Meta WhatsApp Cloud API",
-    subtitle: "Link your official WhatsApp Business account via Meta Developer Portal.",
-    icon: Plug,
-    badge: "Step 2 (Crucial)",
-    estimatedTime: "5 mins",
-    actionText: "Open Integrations Page",
-    actionHref: "/integrations",
-    summary: "Connect Meta Cloud API by retrieving your Phone Number ID, WABA ID, and Permanent System Access Token.",
-    details: {
-      heading: "Step-by-Step Meta Developer Portal Setup Guide",
-      points: [
-        {
-          title: "Step A: Create Meta Developer App",
-          desc: "Go to developers.facebook.com, click 'Create App', choose 'Business' app type, and enter your app name."
-        },
-        {
-          title: "Step B: Add WhatsApp Product",
-          desc: "Inside your app dashboard, click 'Set up' under the WhatsApp product section and choose or link your Meta Business Account."
-        },
-        {
-          title: "Step C: Copy Cloud API Credentials",
-          desc: "From WhatsApp > API Setup, copy your 'Phone Number ID' and 'WhatsApp Business Account ID' (WABA ID)."
-        },
-        {
-          title: "Step D: Generate Permanent Access Token",
-          desc: "Go to Meta Business Settings > Users > System Users. Create a System User with Admin privileges, assign your WhatsApp app, and generate a Never-Expiring Token with 'whatsapp_business_messaging' & 'whatsapp_business_management' permissions.",
-          note: "Do not use a 24-hour temporary token in production!"
-        },
-        {
-          title: "Step E: Configure Webhooks for Live Sync",
-          desc: "In Meta Developer Portal > WhatsApp > Configuration, enter your WhatsFlow Webhook Callback URL and Verify Token to enable instant two-way real-time messaging."
-        }
-      ],
-      codeSnippet: {
-        title: "Your Webhook Configuration Endpoint",
-        code: "Callback URL: https://api.whatsflow.io/api/v1/webhooks/whatsapp\nVerify Token: whatsflow_webhook_secret_token_2026",
-        language: "text"
-      },
-      proTip: "Make sure your WhatsApp Business Phone number has completed Meta OTP verification before attempting to send live messages."
-    }
-  },
-  {
-    id: 3,
-    slug: "contacts-import",
-    title: "3. Import & Manage Contacts",
-    subtitle: "Add single contacts or bulk import CSV files with international phone formatting.",
-    icon: Users,
-    badge: "Step 3",
-    estimatedTime: "3 mins",
-    actionText: "Manage Contacts",
-    actionHref: "/contacts",
-    summary: "Build your customer database with full country code support (+91, +1) and custom tagging.",
-    details: {
-      heading: "Contact List Management & Formatting Rules",
-      points: [
-        {
-          title: "International Format (E.164)",
-          desc: "All phone numbers must include country code without spaces or dashes (e.g. +919876543210 or +14155552671)."
-        },
-        {
-          title: "CSV Bulk Import",
-          desc: "Upload CSV or Excel spreadsheets with column headers: Name, Phone, Email, Tags, Custom Attributes."
-        },
-        {
-          title: "Tagging & Segmentation",
-          desc: "Assign tags like 'Lead', 'VIP Customer', 'Newsletter' to easily filter audiences during campaign creation."
-        }
-      ],
-      codeSnippet: {
-        title: "Sample CSV Upload Format",
-        code: "Name,Phone,Email,Tags\nRahul Sharma,+919876543210,rahul@example.com,VIP\nSarah Jenkins,+14155552671,sarah@example.com,Lead",
-        language: "csv"
-      },
-      proTip: "WhatsFlow automatically validates phone numbers upon entry to prevent delivery failures."
-    }
-  },
-  {
-    id: 4,
-    slug: "templates-creation",
-    title: "4. Create & Submit Message Templates",
-    subtitle: "Design Meta-compliant WhatsApp templates with dynamic variables and action buttons.",
-    icon: FileText,
-    badge: "Step 4",
-    estimatedTime: "4 mins",
-    actionText: "Create Template",
-    actionHref: "/templates",
-    summary: "Submit Marketing, Utility, or Authentication templates to Meta for fast automated approval.",
-    details: {
-      heading: "Template Design & Meta Approval Process",
-      points: [
-        {
-          title: "Select Category & Language",
-          desc: "Choose between Marketing, Utility, or Authentication categories and pick your target language (e.g., English, Hindi)."
-        },
-        {
-          title: "Add Header, Body & Variables",
-          desc: "Construct your message body and insert dynamic variables like {{1}} for customer name or {{2}} for order ID."
-        },
-        {
-          title: "Interactive Buttons",
-          desc: "Attach Call-to-Action (CTA) website links, phone call buttons, or Quick Reply options."
-        },
-        {
-          title: "Meta Automated Review",
-          desc: "Once submitted, Meta's automated AI system reviews your template within 1 to 5 minutes. Status will update to 'APPROVED'."
-        }
-      ],
-      proTip: "Avoid spam words or ALL CAPS in template body text to maintain a high Meta quality rating."
-    }
-  },
-  {
-    id: 5,
-    slug: "campaigns-chat",
-    title: "5. Launch Campaigns & Live 1-on-1 Chat",
-    subtitle: "Send mass broadcast campaigns, trigger automated flows, and reply via Live Chat.",
-    icon: Send,
-    badge: "Step 5",
-    estimatedTime: "Instant",
-    actionText: "Go to Campaigns",
-    actionHref: "/campaigns",
-    summary: "Execute broadcasts to thousands of contacts, track delivery receipts, and converse in real-time.",
-    details: {
-      heading: "Campaign Broadcasts & Live Chat Execution",
-      points: [
-        {
-          title: "Create Outbound Campaign",
-          desc: "Select an approved template, choose your target contact tags or list, set delivery schedule, and launch."
-        },
-        {
-          title: "Real-Time Delivery & Read Analytics",
-          desc: "Monitor live metrics for Sent, Delivered, Read, Failed, and Link Clicks right from your Dashboard."
-        },
-        {
-          title: "Live Chat Interface",
-          desc: "When customers reply to your campaign, seamlessly converse with them using the unified two-way Live Chat."
-        },
-        {
-          title: "Automated Triggers",
-          desc: "Configure auto-responders and chatbot rules to reply instantly 24/7 when specific keywords are detected."
-        }
-      ],
-      proTip: "Use Live Chat filters to prioritize unread customer inquiries and boost response times."
-    }
-  }
-];
+  ];
+};
 
 const faqItems = [
   {
@@ -255,6 +229,7 @@ const faqItems = [
 ];
 
 export default function HowItWorksPage() {
+  const stepsData = React.useMemo(() => getStepsData(), []);
   const [activeStepId, setActiveStepId] = React.useState<number>(1);
   const [copiedKey, setCopiedKey] = React.useState<string | null>(null);
   const [openFaqIndex, setOpenFaqIndex] = React.useState<number | null>(0);
@@ -299,7 +274,7 @@ export default function HowItWorksPage() {
 
       {/* Main Content Area */}
       <div className="space-y-8 font-sans text-xs pb-12">
-        
+
         {/* Top Hero Banner */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-900/90 via-slate-900 to-zinc-950 p-6 md:p-8 text-white border border-emerald-500/20 shadow-xl">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -310,13 +285,13 @@ export default function HowItWorksPage() {
                 <span>WhatsFlow Complete Workflow Guide</span>
               </div>
               <h2 className="text-xl md:text-3xl font-extrabold tracking-tight text-white">
-                5 Simple Steps to Automate WhatsApp Messaging
+                4 Simple Steps to Automate WhatsApp Messaging
               </h2>
               <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-                Follow this quick visual checklist to go from initial account creation to sending high-converting broadcast campaigns & real-time customer support.
+                Follow this quick visual checklist to connect Meta WhatsApp Cloud API, import contacts, submit templates, and launch broadcast campaigns.
               </p>
             </div>
-            
+
             <div className="flex flex-row md:flex-col items-center md:items-end gap-3 shrink-0">
               <div className="text-right">
                 <div className="text-2xl font-black text-emerald-400">100%</div>
@@ -329,7 +304,7 @@ export default function HowItWorksPage() {
           </div>
 
           {/* Quick Steps Horizontal Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-6 pt-6 border-t border-white/10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-6 pt-6 border-t border-white/10">
             {stepsData.map((step) => {
               const IconComp = step.icon;
               const isActive = step.id === activeStepId;
@@ -337,15 +312,13 @@ export default function HowItWorksPage() {
                 <button
                   key={step.id}
                   onClick={() => setActiveStepId(step.id)}
-                  className={`flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 text-left cursor-pointer ${
-                    isActive
-                      ? "bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/50"
-                      : "bg-white/5 hover:bg-white/10 text-slate-300"
-                  }`}
+                  className={`flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 text-left cursor-pointer ${isActive
+                    ? "bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/50"
+                    : "bg-white/5 hover:bg-white/10 text-slate-300"
+                    }`}
                 >
-                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
-                    isActive ? "bg-white/20 text-white" : "bg-white/10 text-emerald-400"
-                  }`}>
+                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${isActive ? "bg-white/20 text-white" : "bg-white/10 text-emerald-400"
+                    }`}>
                     <IconComp className="h-4 w-4" />
                   </div>
                   <div className="overflow-hidden">
@@ -360,7 +333,7 @@ export default function HowItWorksPage() {
 
         {/* Step-by-Step Detailed View Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
+
           {/* Left Step Navigation Sidebar */}
           <div className="lg:col-span-4 space-y-3">
             <h3 className="text-sm font-bold text-foreground px-1 flex items-center gap-2">
@@ -375,18 +348,16 @@ export default function HowItWorksPage() {
                   <div
                     key={step.id}
                     onClick={() => setActiveStepId(step.id)}
-                    className={`group relative flex items-center justify-between p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "bg-card border-emerald-500 shadow-md ring-1 ring-emerald-500/20"
-                        : "bg-card/60 hover:bg-card border-border/80 hover:border-border"
-                    }`}
+                    className={`group relative flex items-center justify-between p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${isActive
+                      ? "bg-card border-emerald-500 shadow-md ring-1 ring-emerald-500/20"
+                      : "bg-card/60 hover:bg-card border-border/80 hover:border-border"
+                      }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors ${
-                        isActive
-                          ? "bg-emerald-600 text-white shadow-xs"
-                          : "bg-muted text-muted-foreground group-hover:text-foreground"
-                      }`}>
+                      <div className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors ${isActive
+                        ? "bg-emerald-600 text-white shadow-xs"
+                        : "bg-muted text-muted-foreground group-hover:text-foreground"
+                        }`}>
                         <IconComp className="h-5 w-5" />
                       </div>
                       <div>
@@ -398,9 +369,8 @@ export default function HowItWorksPage() {
                         </div>
                       </div>
                     </div>
-                    <ChevronRight className={`h-4 w-4 shrink-0 transition-transform ${
-                      isActive ? "text-emerald-600 dark:text-emerald-400 translate-x-1" : "text-muted-foreground/60"
-                    }`} />
+                    <ChevronRight className={`h-4 w-4 shrink-0 transition-transform ${isActive ? "text-emerald-600 dark:text-emerald-400 translate-x-1" : "text-muted-foreground/60"
+                      }`} />
                   </div>
                 );
               })}
@@ -470,7 +440,7 @@ export default function HowItWorksPage() {
               </CardHeader>
 
               <CardContent className="p-6 space-y-6">
-                
+
                 {/* Step Details & Points */}
                 <div className="space-y-4">
                   <h4 className="font-bold text-sm text-foreground flex items-center gap-2">
@@ -587,27 +557,27 @@ export default function HowItWorksPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-2 text-center relative">
-              <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto font-bold text-xs">
+              <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto font-bold text-xs">
                 1
               </div>
-              <div className="font-semibold text-xs text-foreground">User Registration</div>
-              <p className="text-[11px] text-muted-foreground">Log in, generate workspace token, access dashboard.</p>
+              <div className="font-semibold text-xs text-foreground">Meta Cloud API Sync</div>
+              <p className="text-[11px] text-muted-foreground">Phone Number ID, WABA ID & Access Token verification.</p>
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-2 text-center relative">
-              <div className="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto font-bold text-xs">
+              <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto font-bold text-xs">
                 2
               </div>
-              <div className="font-semibold text-xs text-foreground">Meta Cloud API Sync</div>
-              <p className="text-[11px] text-muted-foreground">Phone Number ID, WABA ID & Permanent Token verification.</p>
+              <div className="font-semibold text-xs text-foreground">Contacts Import</div>
+              <p className="text-[11px] text-muted-foreground">Import E.164 formatted customer numbers with custom tags.</p>
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-2 text-center relative">
               <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center mx-auto font-bold text-xs">
                 3
               </div>
-              <div className="font-semibold text-xs text-foreground">Templates & Contacts</div>
-              <p className="text-[11px] text-muted-foreground">Submit templates for Meta approval & import E.164 phone lists.</p>
+              <div className="font-semibold text-xs text-foreground">Template Approval</div>
+              <p className="text-[11px] text-muted-foreground">Design HSM message templates and submit for Meta approval.</p>
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-2 text-center relative">

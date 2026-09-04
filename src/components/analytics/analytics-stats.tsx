@@ -2,10 +2,15 @@
 
 import * as React from "react"
 import { Send, CheckCircle2, AlertCircle, Activity, MessageSquare, Users } from "lucide-react"
-import { analyticsStats } from "@/lib/mock-data"
 import { StatsCard, StatsCardProps } from "../shared/stats-card"
+import { AnalyticsStatItem } from "@/types/analytics.types"
 
-export function AnalyticsStats() {
+interface AnalyticsStatsProps {
+  stats?: AnalyticsStatItem[]
+  loading?: boolean
+}
+
+export function AnalyticsStats({ stats = [], loading = false }: AnalyticsStatsProps) {
   const getIcon = (title: string) => {
     switch (title) {
       case "Total Messages Sent":
@@ -40,9 +45,19 @@ export function AnalyticsStats() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, idx) => (
+          <div key={idx} className="h-24 animate-pulse rounded-xl bg-muted/20 border border-border/80" />
+        ))}
+      </div>
+    )
+  }
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-      {analyticsStats.map((stat, index) => (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      {stats.map((stat, index) => (
         <StatsCard
           key={index}
           title={stat.title}

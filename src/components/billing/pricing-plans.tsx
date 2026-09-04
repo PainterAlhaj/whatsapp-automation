@@ -14,10 +14,8 @@ export function PricingPlans() {
   const handleSelectPlan = (planName: string) => {
     if (planName === currentPlan) {
       alert("You are currently subscribed to this plan tier.")
-    } else if (planName === "Enterprise") {
-      alert("Redirecting to sales scheduler window. Our integrations engineer will schedule a demo with you.")
     } else {
-      alert(`Simulating subscription tier change. Upgrading or changing plan to: ${planName}.`)
+      alert(`Notice: Billing & Payment Gateway is currently under implementation. Live upgrades to ${planName} will be available in the upcoming release.`)
     }
   }
 

@@ -40,7 +40,6 @@ import {
 
 export default function IntegrationsPage() {
   const [integrations, setIntegrations] = React.useState<IntegrationItem[]>(initialIntegrationsData);
-  const [isEmptyState, setIsEmptyState] = React.useState(false);
 
   // Modal open states
   const [isConnectModalOpen, setIsConnectModalOpen] = React.useState(false);
@@ -62,23 +61,11 @@ export default function IntegrationsPage() {
     }
   };
 
-  // Quick reset helper to connect all default integrations
-  const handleResetDemoState = () => {
-    setIntegrations(initialIntegrationsData);
-    setIsEmptyState(false);
-  };
-
-  // Clear all integrations to simulate a total empty workspace
-  const handleSimulateEmptyState = () => {
-    setIntegrations(prev => prev.map(i => ({ ...i, status: "disconnected" })));
-    setIsEmptyState(true);
-  };
-
   return (
     <DashboardLayout>
       <PageHeader
-        title="App Integrations"
-        description="Sync WhatsApp Cloud API, Meta Developer Console, CRM sequences, and private webhook endpoints."
+        title="Meta Integrations"
+        description="Sync WhatsApp Business Cloud API, Meta Developer Console credentials, and inbound webhook endpoints."
       >
         <div className="flex gap-2 shrink-0">
           <Button
@@ -89,75 +76,44 @@ export default function IntegrationsPage() {
             <Plus className="h-4 w-4" />
             Connect Meta WhatsApp
           </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={isEmptyState ? handleResetDemoState : handleSimulateEmptyState}
-            className="h-8 px-2.5 rounded-lg text-xs font-semibold border-border/80 text-foreground hover:bg-muted/40 cursor-pointer gap-1.5"
-          >
-            {isEmptyState ? (
-              <>
-                <ToggleLeft className="h-4 w-4 text-muted-foreground" />
-                <span>Restore Active Demo</span>
-              </>
-            ) : (
-              <>
-                <ToggleRight className="h-4 w-4 text-emerald-500" />
-                <span>Simulate Empty State</span>
-              </>
-            )}
-          </Button>
         </div>
       </PageHeader>
 
-      {isEmptyState ? (
-        /* Workspace Empty State */
-        <EmptyState
-          title="No Active Channel Connections"
-          description="Your WhatsApp Business channel and payment systems are currently offline. Connect your first SaaS integration to initiate outbound templates and synchronize user database profiles."
-          icon={<PlugZap className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />}
-          actionLabel="Connect Meta WhatsApp"
-          onAction={() => setIsConnectModalOpen(true)}
-          className="p-16 text-center"
-        />
-      ) : (
-        /* Regular Active Workspace Grid Layout */
-        <div className="space-y-8 font-sans text-xs">
+      {/* Regular Active Workspace Grid Layout */}
+      <div className="space-y-8 font-sans text-xs">
+        
+        {/* Main core Meta packages listing */}
+        <div>
+          <IntegrationCards 
+            integrations={integrations} 
+            setIntegrations={setIntegrations} 
+            integrationData={integrationData}
+            isLoadingIntegration={isLoadingIntegration}
+            onOpenConnectModal={() => setIsConnectModalOpen(true)}
+            onOpenUpdateModal={() => setIsUpdateModalOpen(true)}
+            onVerifyConnection={() => verifyMutation.mutate()}
+            onDeleteIntegration={() => setIsDeleteConfirmOpen(true)}
+            isVerifying={verifyMutation.isPending}
+            isDeleting={deleteMutation.isPending}
+          />
+        </div>
+
+        {/* Credentials and Timeline activity columns */}
+        <div className="grid gap-6 md:grid-cols-3">
           
-          {/* Main packages listing */}
-          <div>
-            <IntegrationCards 
-              integrations={integrations} 
-              setIntegrations={setIntegrations} 
-              integrationData={integrationData}
-              isLoadingIntegration={isLoadingIntegration}
-              onOpenConnectModal={() => setIsConnectModalOpen(true)}
-              onOpenUpdateModal={() => setIsUpdateModalOpen(true)}
-              onVerifyConnection={() => verifyMutation.mutate()}
-              onDeleteIntegration={() => setIsDeleteConfirmOpen(true)}
-              isVerifying={verifyMutation.isPending}
-              isDeleting={deleteMutation.isPending}
-            />
+          {/* Developer Keys & Endpoints */}
+          <div className="md:col-span-2">
+            <IntegrationApiWebhooks integrationData={integrationData} />
           </div>
 
-          {/* Credentials and Timeline activity columns */}
-          <div className="grid gap-6 md:grid-cols-3">
-            
-            {/* Developer Keys & Endpoints */}
-            <div className="md:col-span-2">
-              <IntegrationApiWebhooks />
-            </div>
-
-            {/* Audit log logs */}
-            <div>
-              <IntegrationActivity integrationData={integrationData} />
-            </div>
-
+          {/* Audit log logs */}
+          <div>
+            <IntegrationActivity integrationData={integrationData} />
           </div>
 
         </div>
-      )}
+
+      </div>
 
       {/* Connect Integration Modal */}
       <ConnectIntegrationModal

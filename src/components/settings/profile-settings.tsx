@@ -4,7 +4,7 @@ import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { User as UserIcon, Mail, Shield, Calendar, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { User as UserIcon, Mail, Shield, Calendar, Clock } from "lucide-react";
 import { useAuth } from "@/lib/auth/auth-context";
 
 export function ProfileSettings() {
@@ -23,15 +23,16 @@ export function ProfileSettings() {
   const initials = ((user.firstName?.[0] || "") + (user.lastName?.[0] || "")).toUpperCase() || user.email.slice(0, 2).toUpperCase();
   const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
-  const formatDate = (isoString?: string | null) => {
-    if (!isoString) return "Never";
+  const formatDate = (isoString?: string | null, fallback?: string | null) => {
+    const target = isoString || fallback;
+    if (!target) return "Just now";
     try {
-      return new Date(isoString).toLocaleString(undefined, {
+      return new Date(target).toLocaleString(undefined, {
         dateStyle: "medium",
         timeStyle: "short",
       });
     } catch {
-      return isoString;
+      return String(target);
     }
   };
 
@@ -151,33 +152,14 @@ export function ProfileSettings() {
               <Input
                 type="text"
                 readOnly
-                value={formatDate(user.lastLoginAt)}
+                value={formatDate(user.lastLoginAt, user.createdAt)}
                 className="h-8 pl-8 text-xs bg-muted/40 cursor-not-allowed focus-visible:ring-0"
               />
             </div>
           </div>
         </div>
-
-        {/* Account Verification & Status Badges */}
-        <div className="p-4 rounded-xl bg-muted/30 border border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
-          <div className="flex items-center gap-2">
-            {user.isEmailVerified ? (
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-            ) : (
-              <XCircle className="h-4 w-4 text-amber-500 shrink-0" />
-            )}
-            <div>
-              <span className="font-bold text-foreground block text-xs">Email Verification Status</span>
-              <span className="text-[11px] text-muted-foreground">
-                {user.isEmailVerified ? "Email address verified." : "Email address pending verification."}
-              </span>
-            </div>
-          </div>
-          <Badge variant={user.isEmailVerified ? "success" : "warning"} className="self-start sm:self-center font-semibold">
-            {user.isEmailVerified ? "Verified" : "Unverified"}
-          </Badge>
-        </div>
       </CardContent>
     </Card>
   );
 }
+

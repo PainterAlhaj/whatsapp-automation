@@ -2,11 +2,16 @@
 
 import * as React from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { activityTimelineData } from "@/lib/mock-data"
 import { Megaphone, FileText, UserPlus, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ActivityTimelineItem } from "@/types/analytics.types"
 
-export function ActivityTimeline() {
+interface ActivityTimelineProps {
+  timeline?: ActivityTimelineItem[]
+  loading?: boolean
+}
+
+export function ActivityTimeline({ timeline = [], loading = false }: ActivityTimelineProps) {
   const getIcon = (type: string) => {
     switch (type) {
       case "broadcast":
@@ -33,6 +38,16 @@ export function ActivityTimeline() {
     }
   }
 
+  const formatTimestamp = (ts: string) => {
+    try {
+      const date = new Date(ts)
+      if (isNaN(date.getTime())) return ts
+      return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }) + " - " + date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    } catch {
+      return ts
+    }
+  }
+
   return (
     <Card className="border-border/80 shadow-xs text-left h-full">
       <CardHeader className="p-5 pb-3">
@@ -40,28 +55,39 @@ export function ActivityTimeline() {
         <CardDescription className="text-[11px]">Real-time feed of automated jobs and broadcast alerts</CardDescription>
       </CardHeader>
       <CardContent className="p-5 pt-0">
-        <div className="relative border-l border-border/80 pl-4 ml-2.5 py-1 space-y-4">
-          {activityTimelineData.map((item) => (
-            <div key={item.id} className="relative font-sans text-xs">
-              {/* Dot Icon marker */}
-              <div className={cn(
-                "absolute -left-[27px] top-0.5 p-1 rounded-full border bg-background shrink-0 select-none",
-                getIconBg(item.type)
-              )}>
-                {getIcon(item.type)}
-              </div>
+        {loading ? (
+          <div className="space-y-3 py-2">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div key={idx} className="h-8 animate-pulse rounded bg-muted/20" />
+            ))}
+          </div>
+        ) : timeline.length === 0 ? (
+          <p className="text-xs text-muted-foreground italic py-6 text-center">
+            No recent activity recorded.
+          </p>
+        ) : (
+          <div className="relative border-l border-border/80 pl-4 ml-2.5 py-1 space-y-4">
+            {timeline.map((item) => (
+              <div key={item.id} className="relative font-sans text-xs">
+                <div className={cn(
+                  "absolute -left-[27px] top-0.5 p-1 rounded-full border bg-background shrink-0 select-none",
+                  getIconBg(item.type)
+                )}>
+                  {getIcon(item.type)}
+                </div>
 
-              <div>
-                <span className="text-[10px] text-muted-foreground font-medium block">
-                  {item.timestamp}
-                </span>
-                <span className="text-foreground leading-normal mt-0.5 block font-medium">
-                  {item.message}
-                </span>
+                <div>
+                  <span className="text-[10px] text-muted-foreground font-medium block">
+                    {formatTimestamp(item.timestamp)}
+                  </span>
+                  <span className="text-foreground leading-normal mt-0.5 block font-medium">
+                    {item.message}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   )

@@ -4,10 +4,8 @@ import * as React from "react"
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { PageHeader } from "@/components/layout/page-header"
 import { Button } from "@/components/ui/button"
-import { 
-  initialActivityLogsData, 
-  ActivityLogItem 
-} from "@/lib/mock-data"
+import { ActivityLogItem } from "@/lib/mock-data"
+import { activityLogsRepository } from "@/repositories"
 import { 
   ToggleLeft, 
   ToggleRight, 
@@ -19,14 +17,33 @@ import { ActivityStats } from "@/components/activity-logs/activity-stats"
 import { ActivityTableTimeline } from "@/components/activity-logs/activity-table-timeline"
 
 export default function ActivityLogsPage() {
-  const [logs, setLogs] = React.useState<ActivityLogItem[]>(initialActivityLogsData)
+  const [logs, setLogs] = React.useState<ActivityLogItem[]>([])
+  const [cachedLogs, setCachedLogs] = React.useState<ActivityLogItem[]>([])
   const [isEmptyState, setIsEmptyState] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  const fetchLogs = React.useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const data = await activityLogsRepository.getAllLogs()
+      setLogs(data)
+      setCachedLogs(data)
+      setIsEmptyState(data.length === 0)
+    } catch (err) {
+      console.error("Failed to load activity logs:", err)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    fetchLogs()
+  }, [fetchLogs])
 
   // Simulation handlers
   const handleToggleEmpty = () => {
     if (isEmptyState) {
-      setLogs(initialActivityLogsData)
+      setLogs(cachedLogs)
       setIsEmptyState(false)
     } else {
       setLogs([])
@@ -34,11 +51,8 @@ export default function ActivityLogsPage() {
     }
   }
 
-  const handleTriggerLoading = () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1500)
+  const handleRefresh = () => {
+    fetchLogs()
   }
 
   // Summary counts
@@ -56,12 +70,12 @@ export default function ActivityLogsPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={handleTriggerLoading}
+            onClick={handleRefresh}
             disabled={isLoading}
             className="h-8 px-2.5 rounded-lg text-xs font-semibold border-border/80 text-foreground hover:bg-muted/40 cursor-pointer flex items-center gap-1.5"
           >
             <RefreshCw className={className("h-3.5 w-3.5", isLoading && "animate-spin")} />
-            <span>Simulate Load</span>
+            <span>{isLoading ? "Refreshing..." : "Refresh Feed"}</span>
           </Button>
 
           <Button
@@ -110,3 +124,4 @@ export default function ActivityLogsPage() {
 function className(...args: (string | boolean | undefined)[]) {
   return args.filter(Boolean).join(" ")
 }
+

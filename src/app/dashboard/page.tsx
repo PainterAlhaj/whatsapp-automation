@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/layout/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, UserPlus, RefreshCw } from "lucide-react"
+import { Plus, UserPlus, RefreshCw, HelpCircle, BookOpen, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 import dynamic from "next/dynamic"
@@ -16,6 +16,7 @@ import { StatsCards } from "@/components/dashboard/stats-cards"
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { QuickActions } from "@/components/dashboard/quick-actions"
 import { SubscriptionStatus } from "@/components/dashboard/subscription-status"
+import { HowItWorksBanner } from "@/components/dashboard/how-it-works-banner"
 import { subscriptionStatus } from "@/lib/mock-data"
 import { useAuth } from "@/lib/auth/auth-context"
 
@@ -60,6 +61,11 @@ export default function DashboardPage() {
         >
           <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isRefreshing ? "animate-spin" : ""}`} /> Refresh
         </Button>
+        <Button variant="outline" size="sm" asChild className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 shrink-0 whitespace-nowrap">
+          <Link href="/how-it-works" className="flex items-center gap-1.5">
+            <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-600 dark:text-emerald-400" /> How It Works
+          </Link>
+        </Button>
         <Button variant="outline" size="sm" asChild className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-border/80 shrink-0 whitespace-nowrap">
           <Link href="/contacts" className="flex items-center gap-1.5">
             <UserPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Add Contacts
@@ -79,16 +85,26 @@ export default function DashboardPage() {
             <div className="space-y-1">
               <h2 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">Good afternoon, {displayName} 👋</h2>
               <p className="text-xs text-muted-foreground/95 max-w-xl">
-                WhatsFlow automation systems are active. Your phone channels are online, and 4 scheduled broadcasts are prepared for delivery.
+                WhatsFlow automation systems are active. Need help getting started or setting up Meta WhatsApp API? Check out the guide below.
               </p>
             </div>
-            <div className="flex items-center gap-2.5 shrink-0 self-start md:self-center">
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-start md:self-center">
+              <Link href="/how-it-works">
+                <Button variant="outline" size="sm" className="h-8 text-xs font-semibold rounded-lg text-emerald-700 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 gap-1.5 cursor-pointer">
+                  <BookOpen className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                  Guide & FAQ
+                  <ArrowRight className="h-3 w-3" />
+                </Button>
+              </Link>
               <Badge variant="success" className="gap-1.5 py-1 px-2.5 rounded-md font-semibold text-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> {subscriptionStatus.planName} Plan
               </Badge>
             </div>
           </CardContent>
         </Card>
+
+        {/* Interactive Onboarding Master Guide Card */}
+        <HowItWorksBanner />
 
         {/* Statistics Grid */}
         <StatsCards />

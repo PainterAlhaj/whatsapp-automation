@@ -14,13 +14,54 @@ import {
   Legend
 } from "recharts"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { trendData, campaignPerformanceData } from "@/lib/mock-data"
+import { trendData, campaignPerformanceData, ChartTrendItem, ChartCampaignPerformanceItem } from "@/lib/mock-data"
+import analyticsService from "@/services/analytics.service"
+import { env } from "@/config/env"
 
 export function AnalyticsCharts() {
   const [mounted, setMounted] = React.useState(false)
+  const [trendCharts, setTrendCharts] = React.useState<ChartTrendItem[]>(env.useMockApi ? trendData : [])
+  const [campaignCharts, setCampaignCharts] = React.useState<ChartCampaignPerformanceItem[]>(env.useMockApi ? campaignPerformanceData : [])
 
   React.useEffect(() => {
+    let isMounted = true
     setMounted(true)
+
+    async function loadDynamicCharts() {
+      try {
+        const data = await analyticsService.getAnalytics("7d")
+        if (!isMounted || !data) return
+
+        // 1. Process Messages Sent Trend Chart
+        if (data.charts?.sentMessagesChartData && data.charts.sentMessagesChartData.length > 0) {
+          const liveTrend: ChartTrendItem[] = data.charts.sentMessagesChartData.map(item => ({
+            date: item.label,
+            messages: item.value || 0
+          }))
+          setTrendCharts(liveTrend)
+        }
+
+        // 2. Process Campaign Performance Chart
+        if (data.campaignsTableData && data.campaignsTableData.length > 0) {
+          const liveCampaigns: ChartCampaignPerformanceItem[] = data.campaignsTableData
+            .slice(0, 5)
+            .map(c => ({
+              name: c.name.length > 15 ? `${c.name.substring(0, 14)}...` : c.name,
+              Sent: c.sent || 0,
+              Delivered: c.delivered || 0
+            }))
+          setCampaignCharts(liveCampaigns)
+        }
+      } catch (err) {
+        console.error("Failed to load dashboard chart analytics from backend:", err)
+      }
+    }
+
+    loadDynamicCharts()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   if (!mounted) {
@@ -42,7 +83,7 @@ export function AnalyticsCharts() {
         </CardHeader>
         <CardContent className="h-[300px] pb-4">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={trendCharts} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorMessages" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
@@ -97,7 +138,7 @@ export function AnalyticsCharts() {
         </CardHeader>
         <CardContent className="h-[300px] pb-4">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={campaignPerformanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <BarChart data={campaignCharts} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="text-border/50" />
               <XAxis 
                 dataKey="name" 

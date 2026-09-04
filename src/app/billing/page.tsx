@@ -4,7 +4,14 @@ import * as React from "react"
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { PageHeader } from "@/components/layout/page-header"
 import { Button } from "@/components/ui/button"
-import { Sparkles, EyeOff, Eye, AlertCircle } from "lucide-react"
+import { Sparkles, EyeOff, Eye, AlertCircle, Wrench, ShieldAlert, CheckCircle2 } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
 
 // Billing Components
 import { CurrentSubscription } from "@/components/billing/current-subscription"
@@ -17,13 +24,10 @@ import { FaqSection } from "@/components/billing/faq-section"
 
 export default function BillingPage() {
   const [isEmptyState, setIsEmptyState] = React.useState(false)
+  const [isNoticeModalOpen, setIsNoticeModalOpen] = React.useState(false)
 
   const handleUpgradeClick = () => {
-    // Scroll smoothly to pricing
-    const pricingEl = document.getElementById("pricing-section")
-    if (pricingEl) {
-      pricingEl.scrollIntoView({ behavior: "smooth" })
-    }
+    setIsNoticeModalOpen(true)
   }
 
   return (
@@ -62,6 +66,26 @@ export default function BillingPage() {
           )}
         </div>
       </PageHeader>
+
+      {/* Professional "Under Implementation" Notice Banner */}
+      <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-amber-900 dark:text-amber-200 backdrop-blur-sm flex items-start gap-3 shadow-xs">
+        <div className="p-2 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+          <Wrench className="h-5 w-5" />
+        </div>
+        <div className="flex-1 text-left">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <h4 className="text-sm font-bold text-amber-900 dark:text-amber-100 flex items-center gap-2">
+              Billing Gateway — Under Active Implementation
+            </h4>
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30">
+              Feature Preview Mode
+            </span>
+          </div>
+          <p className="text-xs text-amber-800/90 dark:text-amber-200/90 mt-1 leading-relaxed">
+            Notice: The Billing & Payment Gateway module is currently under active implementation. All plan figures, subscription metrics, and payment options shown on this page are provided for UI/UX demonstration purposes. Live payment processing (Stripe / Razorpay) will be enabled in an upcoming release.
+          </p>
+        </div>
+      </div>
       
       {isEmptyState ? (
         /* Empty State Billing UI */
@@ -117,6 +141,31 @@ export default function BillingPage() {
           </div>
         </div>
       )}
+
+      {/* Under Implementation Modal Popup */}
+      <Dialog open={isNoticeModalOpen} onOpenChange={setIsNoticeModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+              <Wrench className="h-5 w-5" /> Module Under Implementation
+            </DialogTitle>
+            <DialogDescription className="text-xs leading-relaxed pt-2 text-left">
+              The Payment Gateway and Plan Subscription system is currently undergoing active engineering integration.
+              <br /><br />
+              Live payment checkout and automated invoice generation will be launched in the next platform release. Thank you for your patience during this preview phase!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end pt-4">
+            <Button
+              size="sm"
+              onClick={() => setIsNoticeModalOpen(false)}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold px-4 cursor-pointer"
+            >
+              Understood
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   )
 }

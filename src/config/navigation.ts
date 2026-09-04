@@ -1,11 +1,11 @@
-import { 
-  LayoutDashboard, 
-  Users, 
-  Send, 
-  FileText, 
-  GitBranch, 
-  BarChart3, 
-  CreditCard, 
+import {
+  LayoutDashboard,
+  Users,
+  Send,
+  FileText,
+  GitBranch,
+  BarChart3,
+  CreditCard,
   Settings,
   Plug,
   History,
@@ -40,8 +40,8 @@ export const navigationData: NavSection[] = [
     title: "Engagement",
     items: [
       { name: "Live Chat", href: "/chat", icon: MessageSquare, badge: "Live", badgeVariant: "success" },
-      { name: "Contacts", href: "/contacts", icon: Users, badge: "1,248" },
-      { name: "Campaigns", href: "/campaigns", icon: Send, badge: "3 active", badgeVariant: "success" },
+      { name: "Contacts", href: "/contacts", icon: Users },
+      { name: "Campaigns", href: "/campaigns", icon: Send },
       { name: "Templates", href: "/templates", icon: FileText },
       { name: "Automations", href: "/automations", icon: GitBranch, badge: "New" },
     ]
