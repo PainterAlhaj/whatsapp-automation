@@ -306,10 +306,10 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto p-6 md:p-8 gap-6 md:rounded-2xl border-border/80">
+      <DialogContent className="w-[calc(100vw-1rem)] sm:w-full max-w-5xl max-h-[92vh] overflow-y-auto p-4 sm:p-6 md:p-8 gap-4 sm:gap-6 rounded-xl md:rounded-2xl border-border/80">
         <DialogHeader className="text-left pb-2 border-b border-border/60">
-          <DialogTitle className="text-xl font-bold flex items-center gap-2 text-foreground">
-            <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2 text-foreground">
+            <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
             Create WhatsApp Business Template
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground">
@@ -324,12 +324,12 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
           </div>
         )}
 
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
+        <div className="grid lg:grid-cols-12 gap-5 sm:gap-8 items-start">
           {/* Left Side: Multi-Section Form */}
-          <form onSubmit={handleFormSubmit} className="lg:col-span-7 space-y-6 text-left">
+          <form onSubmit={handleFormSubmit} className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
 
             {/* SECTION 1: Basic Information */}
-            <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-4">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <span className="h-5 w-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-[10px] font-extrabold">1</span>
@@ -395,7 +395,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
             </div>
 
             {/* SECTION 2: Header */}
-            <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
               <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                 <span className="h-5 w-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-[10px] font-extrabold">2</span>
                 Header (Optional)
@@ -433,8 +433,8 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
             </div>
 
             {/* SECTION 3: Body */}
-            <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
-              <div className="flex items-center justify-between">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+              <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <span className="h-5 w-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-[10px] font-extrabold">3</span>
                   Message Body <span className="text-red-500">*</span>
@@ -444,7 +444,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
                   variant="outline"
                   size="sm"
                   onClick={handleInsertVariable}
-                  className="h-7 px-2.5 bg-background text-[11px] font-semibold border-border/80 rounded-md cursor-pointer flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400"
+                  className="h-7 px-2.5 bg-background text-[11px] font-semibold border-border/80 rounded-md cursor-pointer flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 shrink-0"
                 >
                   <Plus className="h-3 w-3" /> Add Variable
                 </Button>
@@ -459,7 +459,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
                   onChange={(e) => setBody(e.target.value)}
                   className="w-full rounded-lg border border-border/80 bg-background px-3 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono resize-none leading-relaxed"
                 />
-                <div className="flex justify-between items-center text-[11px] text-muted-foreground">
+                <div className="flex justify-between items-center text-[11px] text-muted-foreground flex-wrap gap-1">
                   <span>Example: Hello &#123;&#123;1&#125;&#125;, your order &#123;&#123;2&#125;&#125; has been confirmed.</span>
                   <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
                     {activeVariableIds.length} variable{activeVariableIds.length === 1 ? "" : "s"}
@@ -469,7 +469,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
             </div>
 
             {/* SECTION 4: Footer */}
-            <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-2">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-2">
               <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                 <span className="h-5 w-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-[10px] font-extrabold">4</span>
                 Footer (Optional)
@@ -484,19 +484,19 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
             </div>
 
             {/* SECTION 5: Buttons */}
-            <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
-              <div className="flex items-center justify-between">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <span className="h-5 w-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 flex items-center justify-center text-[10px] font-extrabold">5</span>
                   Interactive Buttons
                 </h3>
-                <div className="flex gap-1.5">
+                <div className="flex flex-wrap gap-1.5 mt-1 sm:mt-0">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddButton("QUICK_REPLY")}
-                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer"
+                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer shrink-0"
                   >
                     + Quick Reply
                   </Button>
@@ -505,7 +505,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddButton("URL")}
-                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer"
+                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer shrink-0"
                   >
                     + URL
                   </Button>
@@ -514,7 +514,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddButton("PHONE_NUMBER")}
-                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer"
+                    className="h-7 px-2 text-[10px] font-semibold border-border/80 rounded-md cursor-pointer shrink-0"
                   >
                     + Phone
                   </Button>
@@ -603,7 +603,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
 
             {/* SECTION 6: Variable Examples */}
             {activeVariableIds.length > 0 && (
-              <div className="p-4 rounded-xl bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-900/30 space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-900/30 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="h-5 w-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-extrabold">6</span>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
@@ -662,7 +662,7 @@ export function CreateTemplateModal({ open, onOpenChange, onAddTemplate }: Creat
           </form>
 
           {/* Right Side: Live WhatsApp Preview */}
-          <div className="lg:col-span-5 sticky top-4 bg-zinc-900 text-white border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-xl overflow-hidden min-h-[420px]">
+          <div className="lg:col-span-5 lg:sticky lg:top-4 bg-zinc-900 text-white border border-zinc-800 rounded-xl sm:rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between shadow-xl overflow-hidden min-h-[380px] sm:min-h-[420px]">
             <div className="space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
                 <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">

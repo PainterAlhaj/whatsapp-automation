@@ -56,34 +56,34 @@ export default function DashboardPage() {
           size="sm"
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-border/80 gap-1.5"
+          className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-border/80 gap-1.5 shrink-0 whitespace-nowrap"
         >
-          <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} /> Refresh
+          <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isRefreshing ? "animate-spin" : ""}`} /> Refresh
         </Button>
-        <Button variant="outline" size="sm" asChild className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-border/80">
+        <Button variant="outline" size="sm" asChild className="rounded-lg text-xs md:text-sm font-semibold cursor-pointer border-border/80 shrink-0 whitespace-nowrap">
           <Link href="/contacts" className="flex items-center gap-1.5">
-            <UserPlus className="h-4 w-4" /> Add Contacts
+            <UserPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Add Contacts
           </Link>
         </Button>
-        <Button size="sm" asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs md:text-sm font-semibold cursor-pointer border border-transparent">
+        <Button size="sm" asChild className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs md:text-sm font-semibold cursor-pointer border border-transparent shrink-0 whitespace-nowrap">
           <Link href="/campaigns" className="flex items-center gap-1.5">
-            <Plus className="h-4 w-4" /> New Campaign
+            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> New Campaign
           </Link>
         </Button>
       </PageHeader>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Personalized Welcome Banner */}
         <Card className="text-left overflow-hidden">
-          <CardContent className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold tracking-tight text-foreground">Good afternoon, {displayName} 👋</h2>
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">Good afternoon, {displayName} 👋</h2>
               <p className="text-xs text-muted-foreground/95 max-w-xl">
                 WhatsFlow automation systems are active. Your phone channels are online, and 4 scheduled broadcasts are prepared for delivery.
               </p>
             </div>
             <div className="flex items-center gap-2.5 shrink-0 self-start md:self-center">
-              <Badge variant="success" className="gap-1.5 py-1 px-2.5 rounded-md font-semibold">
+              <Badge variant="success" className="gap-1.5 py-1 px-2.5 rounded-md font-semibold text-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> {subscriptionStatus.planName} Plan
               </Badge>
             </div>

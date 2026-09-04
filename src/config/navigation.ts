@@ -8,7 +8,9 @@ import {
   CreditCard, 
   Settings,
   Plug,
-  History
+  History,
+  MessageSquare,
+  HelpCircle
 } from "lucide-react"
 import * as React from "react"
 
@@ -37,6 +39,7 @@ export const navigationData: NavSection[] = [
   {
     title: "Engagement",
     items: [
+      { name: "Live Chat", href: "/chat", icon: MessageSquare, badge: "Live", badgeVariant: "success" },
       { name: "Contacts", href: "/contacts", icon: Users, badge: "1,248" },
       { name: "Campaigns", href: "/campaigns", icon: Send, badge: "3 active", badgeVariant: "success" },
       { name: "Templates", href: "/templates", icon: FileText },
@@ -49,6 +52,7 @@ export const navigationData: NavSection[] = [
       { name: "Billing", href: "/billing", icon: CreditCard },
       { name: "Integrations", href: "/integrations", icon: Plug },
       { name: "Settings", href: "/settings", icon: Settings },
+      { name: "How It Works", href: "/how-it-works", icon: HelpCircle, badge: "Guide", badgeVariant: "secondary" },
     ]
   }
 ]

@@ -121,7 +121,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         )}
       >
         <Navbar />
-        <main className="flex-1 p-4 md:p-6 max-w-[1600px] w-full mx-auto">
+        <main className="flex-1 p-3.5 sm:p-5 md:p-6 max-w-[1600px] w-full mx-auto">
           {children}
         </main>
       </div>

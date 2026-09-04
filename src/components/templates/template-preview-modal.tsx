@@ -148,11 +148,11 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto p-6 md:p-8 gap-6 md:rounded-2xl border-border/80">
-        <DialogHeader className="text-left pb-3 border-b border-border/60 flex flex-row items-center justify-between">
+      <DialogContent className="w-[calc(100vw-1rem)] sm:w-full max-w-5xl max-h-[92vh] overflow-y-auto p-4 sm:p-6 md:p-8 gap-4 sm:gap-6 rounded-xl md:rounded-2xl border-border/80">
+        <DialogHeader className="text-left pb-3 border-b border-border/60 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2.5">
-              <DialogTitle className="text-lg md:text-xl font-bold text-foreground font-mono truncate max-w-[360px]" title={template.name}>
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <DialogTitle className="text-base sm:text-lg md:text-xl font-bold text-foreground font-mono truncate max-w-[280px] sm:max-w-[360px]" title={template.name}>
                 {template.name}
               </DialogTitle>
               {renderStatusBadge(template.status)}
@@ -163,7 +163,7 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
           </div>
 
           {/* View Tab Switcher */}
-          <div className="flex items-center border border-border/80 rounded-lg p-0.5 bg-muted/40 shrink-0">
+          <div className="flex items-center border border-border/80 rounded-lg p-0.5 bg-muted/40 shrink-0 self-start sm:self-auto">
             <Button
               variant={activeTab === "overview" ? "secondary" : "ghost"}
               size="sm"
@@ -184,12 +184,12 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
         </DialogHeader>
 
         {activeTab === "overview" ? (
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
+          <div className="grid lg:grid-cols-12 gap-5 sm:gap-8 items-start">
             {/* Left Side: Metadata Sections & Buttons */}
-            <div className="lg:col-span-7 space-y-6 text-left">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
               
               {/* SECTION 1: Basic Information */}
-              <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <Info className="h-4 w-4" /> Basic Information
                 </h4>
@@ -241,7 +241,7 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
               </div>
 
               {/* SECTION 2: Sync Information */}
-              <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <Clock className="h-4 w-4" /> Sync Information
                 </h4>
@@ -270,7 +270,7 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
 
               {/* Variable Tester (if variables exist) */}
               {variableIds.length > 0 && (
-                <div className="p-4 rounded-xl bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-900/30 space-y-3">
+                <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-900/30 space-y-3">
                   <h4 className="text-xs font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
                     <Sparkles className="h-4 w-4" /> Live Variable Tester
                   </h4>
@@ -297,7 +297,7 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
               )}
 
               {/* SECTION 4: Buttons Breakdown */}
-              <div className="p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-muted/20 border border-border/60 space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <Layers className="h-4 w-4" /> Configured Buttons ({rawButtons.length})
                 </h4>
@@ -333,7 +333,7 @@ export function TemplatePreviewModal({ template, open, onOpenChange }: TemplateP
             </div>
 
             {/* Right Side: SECTION 3: WhatsApp Preview */}
-            <div className="lg:col-span-5 sticky top-4 bg-zinc-900 text-white border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-xl overflow-hidden min-h-[420px]">
+            <div className="lg:col-span-5 lg:sticky lg:top-4 bg-zinc-900 text-white border border-zinc-800 rounded-xl sm:rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between shadow-xl overflow-hidden min-h-[380px] sm:min-h-[420px]">
               <div className="space-y-3">
                 <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
                   <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">

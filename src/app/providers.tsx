@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { ProtectedRoute } from "@/components/auth/protected-route";
 
+import { SocketProvider } from "@/providers/socket-provider";
+
 import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "@/components/ui/toast";
 
@@ -18,10 +20,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
       >
         <AuthProvider>
-          <ProtectedRoute>
-            {children}
-          </ProtectedRoute>
-          <Toaster />
+          <SocketProvider>
+            <ProtectedRoute>
+              {children}
+            </ProtectedRoute>
+            <Toaster />
+          </SocketProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryProvider>

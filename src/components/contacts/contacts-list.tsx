@@ -1,20 +1,21 @@
 "use client";
 
 import * as React from "react";
-import { 
-  Search, 
-  ChevronDown, 
-  MoreVertical, 
-  Eye, 
-  Send, 
-  Trash2, 
-  MessageSquare, 
-  Calendar, 
-  Phone, 
-  CheckCircle2, 
-  AlertCircle, 
-  Tag, 
-  ChevronLeft, 
+import { useRouter } from "next/navigation";
+import {
+  Search,
+  ChevronDown,
+  MoreVertical,
+  Eye,
+  Send,
+  Trash2,
+  MessageSquare,
+  Calendar,
+  Phone,
+  CheckCircle2,
+  AlertCircle,
+  Tag,
+  ChevronLeft,
   ChevronRight,
   Shield,
   Clock,
@@ -24,23 +25,23 @@ import {
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator 
+  DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogDescription 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
 } from "@/components/ui/dialog";
-import { 
-  Sheet, 
-  SheetContent 
+import {
+  Sheet,
+  SheetContent
 } from "@/components/ui/sheet";
 import { groupsList } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
@@ -53,10 +54,14 @@ import {
   useDeleteContact,
 } from "@/hooks/use-contacts";
 import { Contact, GetContactsQueryParams } from "@/types/contact.types";
+import { getAllCountries, validatePhoneForCountry } from "@/lib/phone-utils";
+import type { CountryCode } from "libphonenumber-js";
 
 const ITEMS_PER_PAGE = 8;
 
 export function ContactsList() {
+  const router = useRouter();
+
   // Search & Filter Local State
   const [searchQuery, setSearchQuery] = React.useState("");
   const [debouncedSearch, setDebouncedSearch] = React.useState("");
@@ -64,6 +69,9 @@ export function ContactsList() {
   const [selectedStatus, setSelectedStatus] = React.useState<string>("all");
   const [sortCriteria, setSortCriteria] = React.useState<string>("name-asc");
   const [currentPage, setCurrentPage] = React.useState(1);
+
+  // Delete Confirmation Modal State
+  const [contactToDelete, setContactToDelete] = React.useState<Contact | null>(null);
 
   // Debounce search query input (300ms)
   React.useEffect(() => {
@@ -125,12 +133,27 @@ export function ContactsList() {
   const selectedContact = contactsList.find((c) => c._id === selectedContactId) || contactDetails;
 
   // Add Contact Form State
+  const countries = React.useMemo(() => getAllCountries(), []);
   const [newContactFirstName, setNewContactFirstName] = React.useState("");
   const [newContactLastName, setNewContactLastName] = React.useState("");
+  const [newContactCountry, setNewContactCountry] = React.useState<CountryCode>("IN");
   const [newContactPhone, setNewContactPhone] = React.useState("");
   const [newContactGroup, setNewContactGroup] = React.useState(groupsList[0]);
   const [newContactNotes, setNewContactNotes] = React.useState("");
   const [formError, setFormError] = React.useState("");
+
+  const selectedCountryObj = React.useMemo(() => {
+    return (
+      countries.find((c) => c.code === newContactCountry) ||
+      countries.find((c) => c.code === "IN") ||
+      countries[0]
+    );
+  }, [countries, newContactCountry]);
+
+  const isPhoneValid = React.useMemo(() => {
+    if (!newContactPhone.trim()) return null;
+    return validatePhoneForCountry(newContactPhone, newContactCountry);
+  }, [newContactPhone, newContactCountry]);
 
   // Edit Notes inside Drawer State
   const [drawerNotes, setDrawerNotes] = React.useState("");
@@ -168,8 +191,18 @@ export function ContactsList() {
       setFormError("First name is required.");
       return;
     }
-    if (!newContactPhone.trim()) {
+    const cleanPhoneDigits = newContactPhone.replace(/\D/g, "");
+    if (!cleanPhoneDigits) {
       setFormError("Phone number is required.");
+      return;
+    }
+
+    // Country-wise validation using libphonenumber-js
+    const isValid = validatePhoneForCountry(newContactPhone, newContactCountry);
+    if (!isValid) {
+      setFormError(
+        `Invalid phone number format for ${selectedCountryObj?.name || newContactCountry} (${selectedCountryObj?.callingCode}).`
+      );
       return;
     }
 
@@ -177,7 +210,8 @@ export function ContactsList() {
       await createContactMutation.mutateAsync({
         firstName: newContactFirstName.trim(),
         lastName: newContactLastName.trim() || undefined,
-        phoneNumber: newContactPhone.trim(),
+        phoneNumber: cleanPhoneDigits,
+        countryCode: selectedCountryObj?.callingCode || "+91",
         tags: [newContactGroup],
         notes: newContactNotes.trim() || undefined,
         status: "active",
@@ -188,6 +222,7 @@ export function ContactsList() {
       setNewContactFirstName("");
       setNewContactLastName("");
       setNewContactPhone("");
+      setNewContactCountry("IN");
       setNewContactGroup(groupsList[0]);
       setNewContactNotes("");
     } catch (err) {
@@ -195,17 +230,25 @@ export function ContactsList() {
     }
   };
 
-  // Delete Contact handler
-  const handleDeleteContact = async (id: string) => {
-    if (confirm("Are you sure you want to delete this contact?")) {
-      try {
-        await deleteContactMutation.mutateAsync(id);
-        if (selectedContactId === id) {
-          setSelectedContactId(null);
-        }
-      } catch (err) {
-        console.error("Failed to delete contact:", err);
+  // Navigate to Live Chat for selected contact
+  const handleSendMessageToContact = (contact: Contact) => {
+    const contactId = contact._id || "";
+    const phone = contact.phoneNumber || "";
+    const query = phone || contact.firstName || "";
+    router.push(`/chat?contactId=${encodeURIComponent(contactId)}&phone=${encodeURIComponent(phone)}&search=${encodeURIComponent(query)}`);
+  };
+
+  // Confirm and Delete Contact handler
+  const handleConfirmDeleteContact = async () => {
+    if (!contactToDelete?._id) return;
+    try {
+      await deleteContactMutation.mutateAsync(contactToDelete._id);
+      if (selectedContactId === contactToDelete._id) {
+        setSelectedContactId(null);
       }
+      setContactToDelete(null);
+    } catch (err) {
+      console.error("Failed to delete contact:", err);
     }
   };
 
@@ -365,8 +408,8 @@ export function ContactsList() {
                 const formattedLastActivity = contact.lastMessageAt ? new Date(contact.lastMessageAt).toLocaleDateString("en-US", { month: "short", day: "2-digit" }) : "No recent activity";
 
                 return (
-                  <tr 
-                    key={contact._id} 
+                  <tr
+                    key={contact._id}
                     className={cn(
                       "hover:bg-muted/10 dark:hover:bg-accent/10 transition-colors cursor-pointer",
                       selectedContactId === contact._id && "bg-muted/20 dark:bg-accent/20"
@@ -405,13 +448,13 @@ export function ContactsList() {
                           <DropdownMenuItem onClick={() => setSelectedContactId(contact._id)} className="cursor-pointer">
                             <Eye className="mr-2 h-3.5 w-3.5 text-muted-foreground" /> View Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Send className="mr-2 h-3.5 w-3.5 text-muted-foreground" /> Send Message
+                          <DropdownMenuItem onClick={() => handleSendMessageToContact(contact)} className="cursor-pointer">
+                            <Send className="mr-2 h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 font-semibold" /> Send Message
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            onClick={() => handleDeleteContact(contact._id)}
-                            className="text-red-600 dark:text-red-400 focus:bg-red-50 focus:text-red-700 dark:focus:bg-red-950/20 dark:focus:text-red-400 cursor-pointer"
+                          <DropdownMenuItem
+                            onClick={() => setContactToDelete(contact)}
+                            className="text-red-600 dark:text-red-400 focus:bg-red-50 focus:text-red-700 dark:focus:bg-red-950/20 dark:focus:text-red-400 cursor-pointer font-medium"
                           >
                             <Trash2 className="mr-2 h-3.5 w-3.5" /> Delete
                           </DropdownMenuItem>
@@ -498,15 +541,68 @@ export function ContactsList() {
               </div>
             </div>
 
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground block">WhatsApp Number</label>
-              <input
-                type="text"
-                placeholder="e.g. +1 (555) 019-2834"
-                value={newContactPhone}
-                onChange={(e) => setNewContactPhone(e.target.value)}
-                className="w-full rounded-lg border border-border/80 bg-background px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono"
-              />
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-muted-foreground block">
+                WhatsApp Phone Number
+              </label>
+              <div className="grid grid-cols-12 gap-2 items-center">
+                {/* Field 1: Country Code Dropdown */}
+                <div className="col-span-5 relative">
+                  <select
+                    value={newContactCountry}
+                    onChange={(e) => setNewContactCountry(e.target.value as CountryCode)}
+                    className="w-full rounded-lg border border-border/80 bg-background pl-2.5 pr-7 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer font-medium truncate"
+                  >
+                    {countries.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.flag} {c.code} ({c.callingCode})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+                </div>
+
+                {/* Field 2: Mobile Number Input */}
+                <div className="col-span-7 relative flex items-center">
+                  <input
+                    type="tel"
+                    placeholder="e.g. 9876543210"
+                    value={newContactPhone}
+                    onChange={(e) => {
+                      const sanitized = e.target.value.replace(/[^\d\s-]/g, "");
+                      setNewContactPhone(sanitized);
+                    }}
+                    className={cn(
+                      "w-full rounded-lg border border-border/80 bg-background px-3 py-2 text-xs focus:outline-none focus:ring-1 font-mono pr-8 transition-colors",
+                      isPhoneValid === true && "border-emerald-500/80 focus:ring-emerald-500/80",
+                      isPhoneValid === false && "border-red-500/80 focus:ring-red-500/80"
+                    )}
+                  />
+                  {isPhoneValid === true && (
+                    <CheckCircle2 className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 pointer-events-none" />
+                  )}
+                  {isPhoneValid === false && (
+                    <AlertCircle className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-red-500 shrink-0 pointer-events-none" />
+                  )}
+                </div>
+              </div>
+
+              {/* Country & Validation Helper */}
+              <div className="flex items-center justify-between text-[11px] pt-0.5">
+                <span className="text-muted-foreground">
+                  Country: <strong className="font-semibold text-foreground">{selectedCountryObj.name}</strong> ({selectedCountryObj.callingCode})
+                </span>
+                {isPhoneValid === true && (
+                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                    Valid number
+                  </span>
+                )}
+                {isPhoneValid === false && (
+                  <span className="text-red-500 font-medium">
+                    Invalid for {selectedCountryObj.name}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="space-y-1">
@@ -540,9 +636,9 @@ export function ContactsList() {
               <Button type="button" variant="outline" size="sm" onClick={() => setIsAddModalOpen(false)} className="rounded-lg text-xs font-semibold cursor-pointer border-border/80">
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
-                size="sm" 
+              <Button
+                type="submit"
+                size="sm"
                 disabled={createContactMutation.isPending}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold cursor-pointer border border-transparent flex items-center gap-1.5"
               >
@@ -554,6 +650,46 @@ export function ContactsList() {
         </DialogContent>
       </Dialog>
 
+      {/* Delete Confirmation Modal */}
+      <Dialog open={!!contactToDelete} onOpenChange={(open) => !open && setContactToDelete(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-red-600 dark:text-red-400 flex items-center gap-2">
+              <Trash2 className="h-5 w-5" /> Delete Contact
+            </DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete{" "}
+              <strong>
+                {contactToDelete?.firstName} {contactToDelete?.lastName}
+              </strong>{" "}
+              ({contactToDelete?.phoneNumber})? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex justify-end gap-2.5 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setContactToDelete(null)}
+              className="rounded-lg text-xs font-semibold cursor-pointer border-border/80"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              disabled={deleteContactMutation.isPending}
+              onClick={handleConfirmDeleteContact}
+              className="bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5"
+            >
+              {deleteContactMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+              Delete Contact
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Contact Details Sheet Drawer slide-out */}
       <Sheet open={!!selectedContact} onOpenChange={(open) => { if (!open) setSelectedContactId(null); }}>
         <SheetContent side="right" className="sm:max-w-md p-5 flex flex-col justify-between overflow-y-auto" showCloseButton={true}>
@@ -561,18 +697,28 @@ export function ContactsList() {
             <div className="flex flex-col h-full justify-between">
               <div>
                 {/* Drawer Header */}
-                <div className="flex items-center gap-3 text-left pb-4 border-b border-border/60 mb-5">
-                  <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-100/30 dark:border-emerald-800/10 flex items-center justify-center font-bold text-sm">
-                    {`${selectedContact.firstName?.[0] || ""}${selectedContact.lastName?.[0] || ""}`.toUpperCase() || "C"}
+                <div className="flex items-center justify-between pb-4 border-b border-border/60 mb-5">
+                  <div className="flex items-center gap-3 text-left">
+                    <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-100/30 dark:border-emerald-800/10 flex items-center justify-center font-bold text-sm">
+                      {`${selectedContact.firstName?.[0] || ""}${selectedContact.lastName?.[0] || ""}`.toUpperCase() || "C"}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-foreground leading-snug">
+                        {`${selectedContact.firstName || ""} ${selectedContact.lastName || ""}`.trim()}
+                      </h3>
+                      <Badge variant={selectedContact.status === "active" ? "success" : "secondary"} className="mt-1">
+                        {selectedContact.status}
+                      </Badge>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-foreground leading-snug">
-                      {`${selectedContact.firstName || ""} ${selectedContact.lastName || ""}`.trim()}
-                    </h3>
-                    <Badge variant={selectedContact.status === "active" ? "success" : "secondary"} className="mt-1">
-                      {selectedContact.status}
-                    </Badge>
-                  </div>
+
+                  <Button
+                    size="sm"
+                    onClick={() => handleSendMessageToContact(selectedContact)}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold gap-1.5 cursor-pointer"
+                  >
+                    <Send className="h-3.5 w-3.5" /> Chat
+                  </Button>
                 </div>
 
                 {/* Details Info Fields */}
@@ -629,8 +775,8 @@ export function ContactsList() {
                     className="w-full rounded-lg border border-border/80 bg-background px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500 resize-none font-normal"
                     placeholder="Enter comments about this client..."
                   />
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     onClick={handleSaveNotes}
                     disabled={updateContactMutation.isPending}
                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-semibold cursor-pointer border border-transparent py-1.5 flex items-center justify-center gap-1.5"
@@ -674,14 +820,21 @@ export function ContactsList() {
                 </div>
               </div>
 
-              {/* Close details panel */}
-              <div className="mt-8 pt-4 border-t border-border/60">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedContactId(null)} 
-                  className="w-full rounded-lg text-xs font-semibold cursor-pointer border-border/80"
+              {/* Drawer footer actions */}
+              <div className="mt-8 pt-4 border-t border-border/60 flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setContactToDelete(selectedContact)}
+                  className="flex-1 rounded-lg text-xs font-semibold cursor-pointer border-red-200 text-red-600 dark:border-red-900 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20"
                 >
-                  Close Details
+                  <Trash2 className="h-3.5 w-3.5 mr-1" /> Delete
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedContactId(null)}
+                  className="flex-1 rounded-lg text-xs font-semibold cursor-pointer border-border/80"
+                >
+                  Close
                 </Button>
               </div>
             </div>

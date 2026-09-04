@@ -35,15 +35,15 @@ export function StatsCard({
 }: StatsCardProps) {
   return (
     <Card className={cn("hover:-translate-y-0.5 hover:shadow-md cursor-default border-border/80 transition-all duration-200", className)}>
-      <CardContent className="p-5">
+      <CardContent className="p-4 sm:p-5">
         <div className="flex items-center justify-between">
-          <span className={cn("text-sm font-medium text-muted-foreground", titleClassName)}>{title}</span>
-          <div className={cn("p-2 rounded-lg shrink-0", iconBgClass)}>
+          <span className={cn("text-xs sm:text-sm font-medium text-muted-foreground", titleClassName)}>{title}</span>
+          <div className={cn("p-1.5 sm:p-2 rounded-lg shrink-0", iconBgClass)}>
             {icon}
           </div>
         </div>
-        <div className="mt-4 flex items-baseline justify-between gap-1">
-          <span className={cn("text-2xl md:text-3xl font-bold tracking-tight text-foreground truncate", valueClassName)}>{value}</span>
+        <div className="mt-3 sm:mt-4 flex items-baseline justify-between gap-1">
+          <span className={cn("text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-foreground truncate", valueClassName)}>{value}</span>
           {change && (
             <Badge
               variant={trend === "up" ? "success" : trend === "down" ? "destructive" : "secondary"}
@@ -55,7 +55,7 @@ export function StatsCard({
             </Badge>
           )}
         </div>
-        {description && <p className={cn("mt-1.5 text-xs text-muted-foreground/90 font-normal", descriptionClassName)}>{description}</p>}
+        {description && <p className={cn("mt-1 sm:mt-1.5 text-xs text-muted-foreground/90 font-normal", descriptionClassName)}>{description}</p>}
       </CardContent>
     </Card>
   )
