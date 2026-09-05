@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: "WhatsFlow - WhatsApp Automation Platform",
-  description: "A modern and professional SaaS dashboard for WhatsApp marketing, automated broadcasting, and analytics.",
-}
 
+export const metadata: Metadata = {
+  title: "WhatsApp Automation | Grow Your Business",
+  description: "Automate your business with WhatsApp",
+};
 import { Providers } from "./providers"
 
 export default function RootLayout({
